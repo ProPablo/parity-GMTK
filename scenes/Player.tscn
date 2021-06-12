@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.gd" type="Script" id=2]
@@ -20,9 +20,9 @@ tracks/0/keys = {
 "values": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 49 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Rotate_Hole"
+[sub_resource type="Animation" id=4]
 length = 20.0
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hole:rotation_degrees")
 tracks/0/interp = 1
@@ -36,25 +36,43 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 172.554
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 23.8924
+
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Hole_rotate"
 anims/Hole_rotate = SubResource( 1 )
 
+[node name="RotationAnimation" type="AnimationPlayer" parent="."]
+autoplay = "Rotate_Hole"
+anims/Rotate_Hole = SubResource( 4 )
+
 [node name="icon" type="Sprite" parent="."]
+visible = false
 modulate = Color( 0.729412, 0.105882, 0.105882, 1 )
 texture = ExtResource( 1 )
 
-[node name="Pickup" type="Area2D" parent="."]
-
 [node name="Influence" type="Area2D" parent="."]
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Influence"]
+shape = SubResource( 2 )
+
 [node name="Hole" type="Sprite" parent="."]
-position = Vector2( 196, 121 )
 texture = ExtResource( 3 )
 hframes = 50
 frame = 2
 
-[node name="RotationAnimation" type="AnimationPlayer" parent="."]
-anims/Rotate_Hole = SubResource( 2 )
+[node name="Pickup" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
+shape = SubResource( 3 )
+
+[connection signal="body_entered" from="Influence" to="." method="_on_Influence_body_entered"]
+[connection signal="body_exited" from="Influence" to="." method="_on_Influence_body_exited"]
+[connection signal="body_entered" from="Pickup" to="." method="_on_Pickup_body_entered"]

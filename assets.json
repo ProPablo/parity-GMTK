@@ -1,0 +1,19 @@
+{
+	"Act1": {
+		"Fall_guy": {
+			"text": "res://assets/main_character.png",
+			"hf": 3,
+			"vf": 2
+		},
+		"Flappy_bird": {
+			"text": "res://assets/flappy.png",
+			"region": [
+				-2,
+				491,
+				84,
+				12
+			],
+			"hf": 3
+		}
+	}
+}
