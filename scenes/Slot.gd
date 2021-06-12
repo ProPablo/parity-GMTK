@@ -30,5 +30,5 @@ func _on_slot_expire():
 func _process(delta):
 	if !item:
 		return
-	$SlotSprite.position = $SlotAnimation.current_animation_position  * shake_scalar
+	$SlotSprite.position.x = $SlotAnimation.current_animation_position  * shake_scalar
 	pass
