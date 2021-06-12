@@ -4,8 +4,7 @@
 [ext_resource path="res://scenes/Slot.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
-resource_name = "TurningRed"
-length = 1.5
+resource_name = "Expiring"
 tracks/0/type = "value"
 tracks/0/path = NodePath("SlotSprite:self_modulate")
 tracks/0/interp = 1
@@ -13,7 +12,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5 ),
+"times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
@@ -37,10 +36,9 @@ tracks/1/keys = {
 script = ExtResource( 2 )
 
 [node name="SlotSprite" type="Sprite" parent="."]
-self_modulate = Color( 1, 0, 0, 1 )
 scale = Vector2( 2, 2 )
 z_index = 3
 texture = ExtResource( 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/TurningRed = SubResource( 1 )
+[node name="SlotAnimation" type="AnimationPlayer" parent="."]
+anims/Expiring = SubResource( 1 )
