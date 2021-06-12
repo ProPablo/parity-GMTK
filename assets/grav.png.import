@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/student female5.png-525189e6b174b9478f7a00a96cdb5cc7.stex"
+path="res://.import/grav.png-480dfe0d197cc7afe2641eacbc1b59b0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/act_1/student female5.png"
-dest_files=[ "res://.import/student female5.png-525189e6b174b9478f7a00a96cdb5cc7.stex" ]
+source_file="res://assets/grav.png"
+dest_files=[ "res://.import/grav.png-480dfe0d197cc7afe2641eacbc1b59b0.stex" ]
 
 [params]
 

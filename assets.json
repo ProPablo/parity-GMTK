@@ -1,19 +1,125 @@
 {
 	"Act1": {
-		"Fall_guy": {
+		"Main_character": {
 			"text": "res://assets/main_character.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				2,
+				1,
+				96,
+				62
+			],
+			"scale": [2, 2],
 			"hf": 3,
 			"vf": 2
 		},
-		"Flappy_bird": {
-			"text": "res://assets/flappy.png",
+		"Student_bike": {
+			"text": "res://assets/act_1/student bike.png",
+			"collision": "res://assets/act_1/act1_student_bike_collision.tres",
 			"region": [
-				-2,
-				491,
-				84,
-				12
+				0,
+				1,
+				96,
+				125
 			],
-			"hf": 3
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4, 
+			"anim": 0.5,
+			"fexclude": [1,2]
+		},
+		"Student_female_1": {
+			"text": "res://assets/act_1/student female1.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4,
+			"anim": 0.5
+		},
+		"Student_female_3": {
+			"text": "res://assets/act_1/student female3.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4
+		},
+		"Student_female_4": {
+			"text": "res://assets/act_1/student female4.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4
+		},
+		"Student_male_1": {
+			"text": "res://assets/act_1/student male1.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4
+		},
+		"Student_male_2": {
+			"text": "res://assets/act_1/student male2.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4
+		},
+		"Student_male_3": {
+			"text": "res://assets/act_1/student male3.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4
+		},
+		"Student_male_4": {
+			"text": "res://assets/act_1/student male4.png",
+			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"region": [
+				0,
+				4,
+				96,
+				123
+			],
+			"scale": [2, 2],
+			"hf": 3,
+			"vf": 4
 		}
+		
 	}
 }

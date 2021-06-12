@@ -2,25 +2,25 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/student female5.png-525189e6b174b9478f7a00a96cdb5cc7.stex"
+path="res://.import/dotted.png-11f673cc6a7bccea5f503ccf19b363ff.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/act_1/student female5.png"
-dest_files=[ "res://.import/student female5.png-525189e6b174b9478f7a00a96cdb5cc7.stex" ]
+source_file="res://assets/dotted.png"
+dest_files=[ "res://.import/dotted.png-11f673cc6a7bccea5f503ccf19b363ff.stex" ]
 
 [params]
 
-compress/mode=3
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
