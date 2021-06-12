@@ -1,6 +1,6 @@
-extends KinematicBody2D
-export var velocity = Vector2()
+extends Node
 
+var asset_dict = {};
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -8,12 +8,14 @@ export var velocity = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("Getting assets");
+	var json_file = File.new()
+	json_file.open("res://assets.json", File.READ)
+	asset_dict = JSON.parse(json_file.get_as_text()).result
+	print(asset_dict)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func _physics_process(delta):
-	move_and_slide(velocity);
+#func _process(delta):
+#	pass
