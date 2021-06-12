@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Item.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Main.gd" type="Script" id=3]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ShakeCamera2D.gd" type="Script" id=5]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
@@ -21,4 +22,10 @@ G = 3558
 
 [node name="ItemPosition" type="Position2D" parent="."]
 position = Vector2( 254, 0 )
+
+[node name="ShakeCamera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+rotating = true
+current = true
+script = ExtResource( 5 )
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]

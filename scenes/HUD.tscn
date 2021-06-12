@@ -31,7 +31,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameOverHUD" type="Node2D" parent="."]
+[node name="LifeLabel" type="Label" parent="."]
+anchor_top = 0.062
+anchor_right = 1.0
+anchor_bottom = 0.094
+margin_top = 0.511997
+margin_right = -388.0
+margin_bottom = 2.744
+custom_fonts/font = SubResource( 1 )
+text = "Life: 3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverHUD" type="Control" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="InventoryHUD" type="Control" parent="."]
 anchor_top = 0.859
