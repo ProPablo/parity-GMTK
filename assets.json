@@ -15,18 +15,11 @@
 		},
 		"Student_bike": {
 			"text": "res://assets/act_1/student bike.png",
-			"collision": "res://assets/act_1/act1_student_bike_collision.tres",
-			"region": [
-				0,
-				1,
-				96,
-				125
-			],
+			"collision": "res://assets/act_1/act1_student_bike_collision.tres",	
 			"scale": [2, 2],
 			"hf": 3,
 			"vf": 4, 
-			"anim": 0.5,
-			"fexclude": [1,2]
+			"anim": 2
 		},
 		"Student_female_1": {
 			"text": "res://assets/act_1/student female1.png",

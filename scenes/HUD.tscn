@@ -37,10 +37,10 @@ __meta__ = {
 [node name="InventoryHUD" type="Control" parent="."]
 anchor_top = 0.9
 anchor_right = 1.0
-anchor_bottom = 0.92
-margin_top = -48.0
-margin_right = -348.0
-margin_bottom = 64.0
+anchor_bottom = 0.9
+margin_top = -43.6
+margin_right = 1.0
+margin_bottom = 80.4
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -64,7 +64,7 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="InventorySlot1" parent="InventoryHUD" instance=ExtResource( 3 )]
-position = Vector2( 96, 64 )
+position = Vector2( 60.055, 67.7849 )
 
 [node name="QueueHUD" type="Control" parent="."]
 anchor_left = 1.0

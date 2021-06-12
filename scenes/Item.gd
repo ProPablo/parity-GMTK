@@ -16,12 +16,6 @@ func _ready():
 	# var rand_index = round(rand_range(0, dict_keys.size() - 1)) ;
 	# print(rand_index)
 	# var current_item = dict_keys[rand_index] # placeholder
-	
-#	var slot_to_add = $"/root/Main".slots[0];
-#	get_parent().remove_child(self)
-#	slot_to_add.add_child(self)
-
-	
 	_loadJSON(current_act, current_item);
 
 func _loadJSON(current_act, current_item):
@@ -51,19 +45,25 @@ func _loadJSON(current_act, current_item):
 		var exclude = []
 		if current_data.has("fexclude"):
 			exclude = current_data["fexclude"]
-#			print(exclude)
 		 
 		anim.track_set_path(track_index, "ItemSprite:frame")
 		
-		var frame_length = current_data["anim"] / float(animation_frames - exclude.size());
-		for n in animation_frames:
-			if exclude.has(n):
-				print("skipping" + str(n))
-				continue
-			anim.track_insert_key(track_index,frame_length*n , n);
-			print(n)
+		anim.length = current_data["anim"]
 
+		var frame_length = current_data["anim"] / float(animation_frames - exclude.size());
+		var counter = 0;
+		for frame in animation_frames:
+			if frame in exclude:
+#				print("skipping" + str(frame))
+				continue
+			anim.track_insert_key(track_index, frame_length*counter, frame);
+			counter+=1
+#			print(frame)
+	
+	#Fix to wierdness
+		anim.value_track_set_update_mode(0, Animation.UPDATE_DISCRETE)
 		anim.loop = true;
+		
 		$ItemAnim.add_animation("item_anim", anim)
 		$ItemAnim.play("item_anim")
 
@@ -89,21 +89,24 @@ func item_to_inventory(slot_number):
 		return
 	
 	is_slotted = true;
-	$CollisionShape2D.disabled = true;
+#	Do Deferred shit when changing active tree or with physics
+	$CollisionShape2D.call_deferred("set", "disabled", true);
 	collision_layer = 0;
 	var slot = $"/root/Main".slots[slot_number];
 	
-	var rect = $ItemSprite.get_rect();
-	if (rect.size.x >=rect.size.y):
-		var new_scale = $"/root/Main".slot_size / rect.size.x;
+	var slot_dimens = slot.get_child(0).get_rect().size * slot.get_child(0).scale;
+	var slot_size = slot_dimens.x;
+	var size = $ItemSprite.get_rect().size * $ItemSprite.scale;
+	
+	if (size.x >=size.y):
+		var new_scale = slot_size / size.x ;
 		$ItemSprite.scale *= new_scale;
 	else:
-		var new_scale = $"/root/Main".slot_size / rect.size.y;
+		var new_scale = slot_size / size.y ;
 		$ItemSprite.scale *= new_scale;
 	
-	
 	get_parent().remove_child(self)
-	slot.add_child(self)
+	slot.call_deferred("add_child", self)
 	
 	velocity = Vector2(0,0)
 	position = Vector2(0,0)
