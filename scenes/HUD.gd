@@ -16,17 +16,16 @@ func _ready():
 #	$QueueHUD/QueueTimerSprite.hide();
 	$StartButton.hide();
 
-
-
-
 func _on_StartButton_pressed():
 	emit_signal("start_game");
 	
 func _process(delta):
 	pass
-#	# cooldown type concept
-#	if (timer <= 0): 
-#		timer = MAX_TIMER;
-#	timer -= delta;
-#	var x = str(stepify(timer, 0.01)).split(".");
-#	$InventoryHUD/InventoryTimerLabel.text = x[0] + " : " + x[1]
+	# cooldown type concept
+	if (timer <= 0): 
+		timer = MAX_TIMER;
+	timer -= delta;
+	var x = str("%.2f" % timer)
+	var y = x.split(".");
+	
+	$InventoryHUD/InventoryTimerLabel.text = y[0] + " : " + y[1]

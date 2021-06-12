@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/queue.png" type="Texture" id=1]
+
+[node name="QueueSlot" type="Node2D"]
+
+[node name="QueueSlotSprite" type="Sprite" parent="."]
+position = Vector2( 142.222, 64.5625 )
+scale = Vector2( 2, 2.03516 )
+texture = ExtResource( 1 )
