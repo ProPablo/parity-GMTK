@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/BlackHole.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Main.gd" type="Script" id=3]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="BlackHole" parent="." instance=ExtResource( 2 )]
+MASS = 2188
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
