@@ -7,7 +7,7 @@ var mass = 1;
 var points = 1;
 var is_slotted = false;
 
-var current_item = "Student_bike"
+var item_name = "Default"
 onready var global = $"/root/Global"
 
 # Called when the node enters the scene tree for the first time.
@@ -15,7 +15,8 @@ func _ready():
 	print(global)
 	pass
 	
-func _loadJSON(current_data):
+func _loadJSON(current_data, input_name):
+	item_name = input_name
 	var dict = global.asset_dict
 	$ItemSprite.texture = load(current_data["text"])
 	$CollisionShape2D.set_shape(load(current_data["collision"]));
@@ -80,8 +81,8 @@ func _physics_process(delta):
 	velocity += Vector2(0,1) * GRAVITY * delta;
 	move_and_slide(velocity);
 
-func item_to_queue(new_item, y_size):
-	_loadJSON(new_item);
+func item_to_queue(new_item, input_name, y_size):
+	_loadJSON(new_item, input_name);
 	is_slotted = true;
 #	TODO abstract scaling
 	var size = $ItemSprite.get_rect().size * $ItemSprite.scale;

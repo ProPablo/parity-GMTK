@@ -7,39 +7,55 @@ const Item = preload("res://scenes/Item.tscn")
 const Plus = preload("res://scenes/Plus.tscn")
 export var space_between = 0.05;
 export var expire_time = 2.5
+export var fade_scale = 0.16
+
+var space 
+var height 
+var parent_size
+var index;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var space = $QueueSlotSprite.get_rect().size.x
-	var height = $QueueSlotSprite.get_rect().size.y
-	var new_item = pick_item();
-	var size = new_item.scale * new_item.get_child(0).get_rect().size;
-	print((-space/2 + size.x/2 + space*space_between) * -1)
-	var queue_scale = get_parent().QUEUE_SCALE;
-	var offset =  2 * height * queue_scale
-	new_item.position = Vector2(576*0.75, ((-space/2 + size.y/2 + space*space_between) * -1) + offset)
-	$QueueSlotSprite.position = Vector2(576*0.75, ((-space/2 + size.y/2 + space*space_between) * -1) + offset)
-	$QueueSlotSprite.modulate.a = 1 - 0.16 * queue_scale
-	new_item.modulate.a = 1 - 0.16 * queue_scale
-
+	space = $QueueSlotSprite.get_rect().size.x * $QueueSlotSprite.scale.x
+	height = $QueueSlotSprite.get_rect().size.y * $QueueSlotSprite.scale.y 
+	parent_size = get_parent().get_rect().size
 	
 	pass # Replace with function body.
 
-func pick_item() -> KinematicBody2D:
-	var dict_keys = global.asset_dict[global.current_act].keys()
-	var rand_index = rand_range(0, dict_keys.size() - 1)
-	print(rand_index)
+func init(input_index):
+	index = input_index
 	
-	var current_item_name = dict_keys[rand_index]
-	var current_item_data = global.asset_dict[global.current_act][current_item_name]
+	var offset =  height * index + height/2 + space_between * height
+	position = Vector2(parent_size.x/2, offset + height*space_between*index)
+	adjust_index()
+	
+	var item1 = pick_item();
+	item1.position.x = -space/4
+	
+	var item2 = pick_item();
+	item2.position.x = space/4
+
+func adjust_index():
+	var fade = 1 - fade_scale * index
+	modulate.a = fade
+	
+func pick_item() -> KinematicBody2D:
+
 	var item = Item.instance();
 	# Very Important to add child to the tree with add_child otherwise it cant access root 
 	add_child(item);
-	print("DATA", current_item_data);
 #	print("parent" + str(item.get_parent().name))
-	item.item_to_queue(current_item_data, $QueueSlotSprite.get_rect().size.y)
-
-	items.append(item);
+	var dict_keys = global.asset_dict[global.current_act].keys()
+	var rand_index = rand_range(0, dict_keys.size() - 1)
+	print(rand_index)
+	var current_item_name = dict_keys[rand_index]
+	var current_item_data = global.asset_dict[global.current_act][current_item_name]
+	item.item_to_queue(current_item_data, current_item_name, $QueueSlotSprite.get_rect().size.y)
+	
+	var size = item.scale * item.get_child(0).get_rect().size;
+#	print((-space/2 + size.x/2 + space*space_between) * -1)
+	item.position = Vector2(0, 0)
+	items.append(item)
 	print(items)
 	return item;
 

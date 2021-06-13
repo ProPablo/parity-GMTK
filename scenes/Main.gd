@@ -13,7 +13,7 @@ var QUEUE_SCALE = 0;
 var QUEUE_MAX = 1;
 
 #var inventory = []
-var queue = []
+var queues = []
 var slots = []
 
 # Called when the node enters the scene tree for the first time.
@@ -82,14 +82,12 @@ func _on_ItemTimer_timeout():
 #	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
-	item._loadJSON(current_item_data);
+	item._loadJSON(current_item_data, current_item_name);
 
 func _on_QueueTimer_timeout():
-	var is_full = true;
-	print(queue)
-	var QueueItem = QueueSlot.instance()
-	add_child(QueueItem)
-	QUEUE_SCALE += 1;
-	if is_full:
-		print("Queue full")
+	var size_of_list = queues.size()
+	var queue_instance = QueueSlot.instance()
+	$HUD/QueueHUD.add_child(queue_instance)
+	queue_instance.init(size_of_list)
+	queues.append(queue_instance)
 	pass # Replace with function body.
