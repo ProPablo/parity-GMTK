@@ -4,6 +4,9 @@ const Slot = preload("res://scenes/Slot.tscn")
 const QueueSlot = preload("res://scenes/QueueSlot.tscn")
 onready var global = $"/root/Global"
 #Stays constant thanks to settings
+var global_timer = 0;
+var QUEUE_MAX_TIME = 2;
+var life_count = 3;
 var screen_size;
 export var queue_slots = 6;
 export var total_slots = 4;
@@ -18,6 +21,7 @@ var slots = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	global_timer = QUEUE_MAX_TIME;
 	screen_size = get_viewport_rect().size;
 	$ItemTimer.start();
 	$QueueTimer.start();
@@ -67,6 +71,10 @@ func _on_gameover():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if (global_timer <= 0 && life_count > 0): 
+		global_timer = QUEUE_MAX_TIME;
+		_on_global_timer_timeout()
+	global_timer -= delta;
 	if (Input.is_action_just_pressed("restart")):
 		get_tree().reload_current_scene()
 	pass
@@ -91,3 +99,12 @@ func _on_QueueTimer_timeout():
 	queue_instance.init(size_of_list)
 	queues.append(queue_instance)
 	pass # Replace with function body.
+
+func _on_global_timer_timeout():
+	life_count -= 1;
+	$HUD.display_heart()
+	# $LifeDown.play();
+	if (life_count <= 0): 
+		_on_gameover();
+		$HUD/RetryButton.show();
+		$HUD/GOLabel.show();
