@@ -76,7 +76,7 @@ func _on_Influence_body_exited(body):
 func _on_Pickup_body_entered(body):
 	if body.is_slotted:
 		return
-	print(body.name + "has coomed")
+#	print(body.name + "has coomed")
 	influenced.erase(body)
 	emit_signal("item_collected", body)
 	pass # Replace with function body.

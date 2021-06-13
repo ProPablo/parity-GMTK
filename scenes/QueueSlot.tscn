@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/queue.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Plus.tscn" type="PackedScene" id=2]
@@ -33,10 +33,15 @@ tracks/1/keys = {
 "values": [ 0.0, -100.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 95.4256, 22.9949 )
 
 [node name="QueueSlot" type="Area2D"]
+collision_layer = 32
+collision_mask = 192
 script = ExtResource( 3 )
 
 [node name="Container" type="Node2D" parent="."]
@@ -53,10 +58,12 @@ margin_bottom = 25.0
 rect_scale = Vector2( 0.717, 0.542 )
 
 [node name="QueueSlotAnimation" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
 anims/Expiring = SubResource( 1 )
+anims/Idle = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [connection signal="area_entered" from="." to="." method="_on_QueueSlot_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_QueueSlot_body_entered"]

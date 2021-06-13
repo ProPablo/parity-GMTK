@@ -83,5 +83,17 @@ frame = 24
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlanetSprite"]
 autoplay = "Planet"
 anims/Planet = SubResource( 1 )
+
+[node name="outside_stuff_tileset" type="Sprite" parent="."]
+position = Vector2( 472, 656 )
+texture = ExtResource( 11 )
+hframes = 10
+region_enabled = true
+region_rect = Rect2( 0, 200, 144, 24 )
+
+[node name="CraftingTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
 [connection signal="timeout" from="QueueTimer" to="." method="_on_QueueTimer_timeout"]
+[connection signal="timeout" from="CraftingTimer" to="." method="_on_CraftingTimer_timeout"]
