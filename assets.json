@@ -1,19 +1,5 @@
 {
 	"Act1": {
-		"Main_character": {
-			"text": "res://assets/main_character.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
-			"region": [
-				2,
-				1,
-				96,
-				62
-			],
-			"scale": [2, 2],
-			"hf": 3,
-			"vf": 2,
-			"anim": 2
-		},
 		"Student_bike": {
 			"text": "res://assets/act_1/student bike.png",
 			"collision": "res://assets/act_1/act1_student_bike_collision.tres",	
@@ -35,16 +21,6 @@
 			"hf": 3,
 			"vf": 4, 
 			"anim": 2
-		},
-		"Outside_flower": {
-			"text": "res://assets/act_1/outside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
-			"region": [
-				51,
-				5,
-				42,
-				41
-			]
 		},
 		"Inside_TV": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
@@ -71,7 +47,7 @@
 			"vf": 4, 
 			"anim": 2
 		},
-		"Inside_Cabinet": {
+		"Inside_cabinet": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
 			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
@@ -82,7 +58,7 @@
 			],
 			"scale": [2, 2]
 		},
-		"Inside_Globe": {
+		"Inside_globe": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
 			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
@@ -93,19 +69,116 @@
 			],
 			"scale": [2, 2]
 		},
-		"Student_male_4": {
-			"text": "res://assets/act_1/student male4.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+		"Inside_painting": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				2,
+				1130,
+				13,
+				15
+			],
+			"scale": [3, 3]
+		},
+		"Inside_vase": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				1,
+				1068,
+				15,
+				15
+			],
+			"scale": [3, 3]
+		},
+		"Inside_mirror": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				134,
+				1064,
+				20,
+				32
+			],
+			"scale": [2, 2]
+		}
+		
+	},
+	"Act2": {
+		"Outside_rocks": {
+			"text": "res://assets/act_1/outside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				18,
+				233,
+				63,
+				55
+			]
+		},
+		"Inside_bookshelf": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				224,
+				1094,
+				32,
+				33
+			],
+			"scale": [2, 2]
+		},
+		"Inside_fireplace": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				64,
+				1088,
+				32,
+				39
+			],
+			"scale": [2, 2]
+		},
+		"Outside_flower": {
+			"text": "res://assets/act_1/outside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				51,
+				5,
+				42,
+				41
+			]
+		},
+		"Phone_male": {
+			"text": "res://assets/act_1/phone_male.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
 				0,
-				4,
-				96,
-				123
+				200,
+				144,
+				24
 			],
 			"scale": [2, 2],
-			"hf": 3,
-			"vf": 4, 
-			"anim": 2
+			"hf": 10, 
+			"anim": 1
+		},
+		"Outside_tree": {
+			"text": "res://assets/act_1/outside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				678,
+				12,
+				79,
+				84
+			]
+		},
+		"Outside_sign": {
+			"text": "res://assets/act_1/outside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"region": [
+				336,
+				194,
+				63,
+				46
+			]
 		}
 		
 	}
