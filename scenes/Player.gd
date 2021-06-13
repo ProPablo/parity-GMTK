@@ -1,8 +1,8 @@
 extends Node2D
 
 signal item_collected(item)
-
 export var MASS = 200
+var game_over
 
 onready var p_div = $PlayerContainer;
 var angular_velocity = 0
@@ -16,7 +16,9 @@ var influenced = []
 func _ready():
 	
 	p_div.rotation = 3* PI/4;
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	pass # Replace with function body.
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,7 +33,7 @@ func _process(delta):
 #	rotation = pi/2 to -pi/2
 
 func _input(event):
-	if (event is InputEventMouseMotion):
+	if (event is InputEventMouseMotion && !get_parent().game_over):
 		var mouse_pos = get_global_mouse_position();
 		position = mouse_pos;
 		# print(Input.get_last_mouse_speed())
