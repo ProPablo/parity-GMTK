@@ -8,7 +8,11 @@ var screen_size;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport().size;
+#	var projectResolution=Vector2(Globals.get("display/width"),Globals.get("display/height"));
+#	print(OS.window_size)
+#	print(ProjectSettings.get_setting("display/window/size/width"))
+	screen_size = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height"))
+#	screen_size = get_viewport().size;
 	print("Getting assets");
 	var json_file = File.new()
 	json_file.open("res://assets.json", File.READ)

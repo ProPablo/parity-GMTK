@@ -2,6 +2,7 @@ extends Node2D
 export (PackedScene) var Item;
 const Slot = preload("res://scenes/Slot.tscn")
 const QueueSlot = preload("res://scenes/QueueSlot.tscn")
+const Present = preload("res://scenes/Present.tscn")
 onready var global = $"/root/Global"
 #Stays constant thanks to settings
 var global_timer = 0;
@@ -49,6 +50,7 @@ func create_inventory():
 		slot.index = i
 
 		slot.position = Vector2(0.5 * div_margin + i* div_x + 0.5*div_x, hud_size.y/2 )
+		slot.connect("area_entered", self, "_stop_crafting")
 		slots.append(slot);
 
 func _on_Item_pickup(item):
@@ -83,16 +85,14 @@ func _process(delta):
 		global_timer = QUEUE_MAX_TIME;
 #		_on_global_timer_timeout()
 	global_timer -= delta;
-	
-	check_crafting()
+	if !currently_crafting:
+		check_crafting()
 	
 	if (Input.is_action_just_pressed("restart")):
 		get_tree().reload_current_scene()
 	pass
 
 func check_crafting():
-	if currently_crafting:
-		return
 	for q in queues:
 		var selected_q = []
 
@@ -101,13 +101,13 @@ func check_crafting():
 			for slot in slots:
 				if !slot.item:
 					continue
-				if slot.item._name == q_item._name:
+				if (slot.item._name == q_item._name && !selected_q.has(slot.index)):
 					selected_q.append(slot.index);
 					break
 		
 		if (selected_q.size() >= q.items.size()):
-			print("Starting craft on q" + str(q.index))
 			crafting_slots = selected_q
+			currently_crafting = q
 			for s in crafting_slots:
 				slots[s]._start_crafting(q)
 	
@@ -156,3 +156,15 @@ func _on_global_timer_timeout():
 		_on_gameover();
 		$HUD/RetryButton.show();
 		$HUD/GOLabel.show();
+
+func _stop_crafting(body):
+	if !currently_crafting:
+		return
+	print("Stop da craft")
+	var present = Present.instance()
+	add_child(present)
+	var collide_position = slots[crafting_slots[0]].position 
+	present.position = collide_position
+	present.travel(currently_crafting);
+#	present.get_node("Tween").interpolate_property(present, "position", collide_position, )
+	pass

@@ -22,6 +22,8 @@ var queue_to_craft = null;
 export var shake_scalar = 5.0
 export var expire_time = 2.5
 
+export var time_to_craft = 3
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	slot_size = $SlotSprite.get_rect().size * $SlotSprite.scale
@@ -41,9 +43,8 @@ func _start_crafting(queue):
 	$SlotSprite.modulate = queue.color
 	queue_to_craft = queue
 	state = CRAFTING;
-	move_to = Vector2(global.screen_size.x /2, position.y + 2 * slot_size.y)
+	move_to = Vector2(global.screen_size.x /2, position.y + -2 * slot_size.y)
 	t = 0.0
-	
 
 func _on_slot_expire():
 	print("Fukin done")
@@ -66,7 +67,8 @@ func _process(delta):
 			$SlotSprite.position.y = $SlotAnimation.current_animation_position  * shake_scalar * randf()
 		CRAFTING:
 			t+= delta
-			position.move_toward(move_to, t)
+#			position.move_toward(move_to, delta * 220000)
+			position = position.linear_interpolate(move_to, t / time_to_craft)
 		IDLE:
 			pass
 

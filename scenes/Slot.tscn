@@ -51,6 +51,8 @@ tracks/0/keys = {
 extents = Vector2( 15, 15 )
 
 [node name="InventorySlot" type="Area2D"]
+collision_layer = 16
+collision_mask = 16
 script = ExtResource( 2 )
 shake_scalar = 10.0
 expire_time = 6.0
