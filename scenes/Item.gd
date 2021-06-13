@@ -7,16 +7,15 @@ var mass = 1;
 var points = 1;
 var is_slotted = false;
 
-var item_name = "Default"
+var _name = "Default"
 onready var global = $"/root/Global"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(global)
 	pass
 	
 func _loadJSON(current_data, input_name):
-	item_name = input_name
+	_name = input_name
 	var dict = global.asset_dict
 	$ItemSprite.texture = load(current_data["text"])
 	$CollisionShape2D.set_shape(load(current_data["collision"]));

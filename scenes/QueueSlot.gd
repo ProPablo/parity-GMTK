@@ -13,17 +13,23 @@ var space
 var height 
 var parent_size
 var index;
+var color = Color.white;
+
+var rng
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	space = $QueueSlotSprite.get_rect().size.x * $QueueSlotSprite.scale.x
 	height = $QueueSlotSprite.get_rect().size.y * $QueueSlotSprite.scale.y 
 	parent_size = get_parent().get_rect().size
-	
+
 	pass # Replace with function body.
 
 func init(input_index):
 	index = input_index
+	color = Color(randf(), randf(), randf(), 1)
+	$QueueSlotSprite.modulate = color
 	
 	var offset =  height * index + height/2 + space_between * height
 	position = Vector2(parent_size.x/2, offset + height*space_between*index)
@@ -46,8 +52,10 @@ func pick_item() -> KinematicBody2D:
 	add_child(item);
 #	print("parent" + str(item.get_parent().name))
 	var dict_keys = global.asset_dict[global.current_act].keys()
-	var rand_index = rand_range(0, dict_keys.size() - 1)
-	print(rand_index)
+	# var rand_index = rng.randi_range(0, dict_keys.size() - 1)
+#	var rand_index = randi() % dict_keys.size()
+	var rand_index = randi() % 2
+	print("Random shit" + str(rand_index))
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
 	item.item_to_queue(current_item_data, current_item_name, $QueueSlotSprite.get_rect().size.y)
@@ -56,7 +64,6 @@ func pick_item() -> KinematicBody2D:
 #	print((-space/2 + size.x/2 + space*space_between) * -1)
 	item.position = Vector2(0, 0)
 	items.append(item)
-	print(items)
 	return item;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

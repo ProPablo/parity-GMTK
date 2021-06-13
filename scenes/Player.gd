@@ -61,7 +61,6 @@ func _physics_process(delta):
 func _on_Influence_body_entered(body):
 	if body.is_slotted:
 		return
-	print(body.name + "has entered the cum zone")
 	influenced.append(body)
 	pass # Replace with function body.
 
@@ -69,7 +68,6 @@ func _on_Influence_body_entered(body):
 func _on_Influence_body_exited(body):
 	if body.is_slotted:
 		return
-	print(body.name + "has left the cum zone")
 	influenced.erase(body)
 	pass # Replace with function body.
 
