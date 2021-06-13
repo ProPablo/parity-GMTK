@@ -8,7 +8,6 @@ var screen_size;
 export var queue_slots = 6;
 export var total_slots = 4;
 export var slots_margin = 0.3;
-var game_over = false;
 
 #var inventory = []
 var queue = []
@@ -20,7 +19,6 @@ func _ready():
 	$ItemTimer.start();
 	$QueueTimer.start();
 	$Player.connect("item_collected", self, "_on_Item_pickup")
-	$HUD.connect("game_over", self, "_on_gameover")
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	print(slots)
 	create_inventory()
@@ -52,7 +50,6 @@ func create_inventory():
 
 func _on_Item_pickup(item):
 	var is_full = true;
-	$Sounds/ItemPickup.play();
 	for i in range(total_slots):
 		if !slots[i].item:
 			slots[i].insert_item(item)
@@ -64,11 +61,6 @@ func _on_Item_pickup(item):
 		item.queue_free()
 #	inventory.append(item) 
 
-func _on_gameover():
-	game_over = true
-	$ItemTimer.stop();
-	$Sounds/GameOver.play();
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

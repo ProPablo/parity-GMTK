@@ -1,21 +1,22 @@
 extends CanvasLayer
 signal start_game;
 signal game_over;
-
-var life = preload("res://assets/life.png")
-var life_empty = preload("res://assets/life_empty.png")
-
+var timer = 1;
+const MAX_TIMER = 5;
+#var global_timer = get_parent().global_timer
+#var QUEUE_MAX_TIME = get_parent().QUEUE_MAX_TIME
+#var life_count = get_parent().life_count
 var global_timer = 0;
-var QUEUE_MAX_TIME = 2;
+var QUEUE_MAX_TIME = 5;
 var life_count = 3;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	timer = MAX_TIMER
 	global_timer = QUEUE_MAX_TIME;
-	$RetryButton.hide();
-	hide();
-
-func hide():
+	$LifeLabel.text = str(life_count)
+	
+#	$RetryButton.hide();
 #	$PointLabel.hide();
 #	$InventoryHUD/InventorySprite.hide();
 #	$InventoryHUD/InventoryTimerLabel.hide();
@@ -24,34 +25,30 @@ func hide():
 #	$QueueHUD/QueueTimerLabel.hide();
 #	$QueueHUD/QueueTimerSprite.hide();
 	$StartButton.hide();
-	
+
 func _on_StartButton_pressed():
 	emit_signal("start_game");
 
 func _process(delta):
-	if (global_timer <= 0 && life_count > 0): 
+	pass
+
+	if (global_timer <= 0): 
 		global_timer = QUEUE_MAX_TIME;
 		_on_global_timer_timeout()
 	global_timer -= delta;
+	
+	# cooldown type concept
+	if (timer <= 0): 
+		timer = MAX_TIMER;
+	timer -= delta;
+	var x = str("%.2f" % timer)
+	var y = x.split(".");
+	
+	$InventoryHUD/InventoryTimerLabel.text = y[0] + " : " + y[1]
 
 func _on_global_timer_timeout():
 	life_count -= 1;
-	display_heart()
-	$LifeDown.play();
+	$LifeLabel.text = str(life_count)
 	if (life_count <= 0): 
+		print("YOU HAVE FAILED");
 		emit_signal("game_over")
-		$RetryButton.show();
-
-func display_heart():
-	var life_bar = get_node("LifeBar")
-	for i in life_bar.get_child_count():
-		life_bar.get_child(i)
-		if (life_count > i):
-			life_bar.get_child(i).texture = life
-		else:
-			life_bar.get_child(i).texture = life_empty
-
-
-func _on_RetryButton_pressed():
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	get_tree().reload_current_scene()
