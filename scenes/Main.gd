@@ -9,6 +9,7 @@ var global_timer = 0;
 var is_shown_start;
 var QUEUE_MAX_TIME = 2;
 var life_count = 3;
+var points = 0;
 
 export var queue_slots = 6;
 export var total_slots = 4;
@@ -28,6 +29,10 @@ var inventory = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Music.play();
+	print("res://assets/" + str(global.current_act).to_lower() + "planet")
+	$PlanetSprite.texture = load("res://assets/" + str(global.current_act).to_lower() + "planet.png")
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	is_shown_start = global.is_shown_start
 	global_timer = QUEUE_MAX_TIME;
 	$HUD.hide();
@@ -36,6 +41,7 @@ func _ready():
 	$Player.connect("item_collected", self, "_on_Item_pickup")
 	$HUD.connect("game_over", self, "_on_gameover")
 	$HUD.connect("start_game", self, "_on_gamestart")
+	$HUD/PointLabel.text = "Points: " + str(points)
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	create_inventory()
 	pass # Replace with function body.
@@ -60,6 +66,11 @@ func create_inventory():
 func _on_Item_pickup(item):
 	if (game_over || !game_start):
 		return;
+	points += 1;
+#	when item success crafted -> next act
+#	if (points == 10):
+#		next_act()
+	$HUD/PointLabel.text = "Points: " + str(points)
 	$ShakeCamera2D.add_trauma(0.1);
 	var is_full = true;
 	$ItemPickup.play();
@@ -72,7 +83,15 @@ func _on_Item_pickup(item):
 	if is_full:
 		print("Inventory full taking damage")
 		item.queue_free()
+
 #	inventory.append(item) 
+
+func next_act():
+	var current_act_split = global.current_act.split("_")
+	var new_act = int(current_act_split[1]) + 1
+	global.current_act = current_act_split[0] + "_" + str(new_act)
+	$PlanetSprite.texture = load("res://assets/" + str(global.current_act).to_lower() + "planet.png")
+	$HUD/ActLabel.text = global.current_act
 
 func _on_gameover():
 	game_over = true
@@ -80,10 +99,12 @@ func _on_gameover():
 	$HUD/QueueHUD.hide();
 	$ItemTimer.stop();
 	$QueueTimer.stop();
+	$Music.stop();
 	$GameOver.play();
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_gamestart():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	get_tree().call_group("items", "queue_free");
 	game_start = true
 	$HUD/PointLabel.show();
@@ -93,13 +114,15 @@ func _on_gamestart():
 	$HUD/TitleLabel.hide();
 	$HUD/LifeBar.show();
 	$HUD/StartButton.hide();
+	$HUD/ActLabel.show();
+	$HUD/ActLabel.text = global.current_act.to_upper();
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (global_timer <= 0 && life_count > 0): 
 		global_timer = QUEUE_MAX_TIME;
-		_on_global_timer_timeout()
+#		_on_global_timer_timeout()
 	global_timer -= delta;
 	if !currently_crafting:
 		check_crafting()

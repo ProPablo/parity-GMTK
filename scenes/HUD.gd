@@ -8,6 +8,7 @@ var life_empty = preload("res://assets/life_empty.png")
 func _ready():
 	$RetryButton.hide();
 	$GOLabel.hide();
+	$ActLabel.hide();
 
 func hide():
 	$PointLabel.hide();

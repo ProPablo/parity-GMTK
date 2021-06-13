@@ -3,7 +3,7 @@ var is_shown_start = false;
 var asset_dict = {};
 # var inventory_slots = [];
 
-var current_act = "Act1"
+var current_act = "Act_1"
 var screen_size;
 
 # Called when the node enters the scene tree for the first time.

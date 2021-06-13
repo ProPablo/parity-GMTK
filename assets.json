@@ -1,5 +1,5 @@
 {
-	"Act1": {
+	"Act_1": {
 		"Student_bike": {
 			"text": "res://assets/act_1/student bike.png",
 			"collision": "res://assets/act_1/act1_student_bike_collision.tres",	
@@ -104,7 +104,7 @@
 		}
 		
 	},
-	"Act2": {
+	"Act_2": {
 		"Outside_rocks": {
 			"text": "res://assets/act_1/outside_stuff_tileset.png",
 			"collision": "res://assets/act_1/act1_flower_collision.tres",

@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/clover-sans.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/HUD.gd" type="Script" id=2]
 [ext_resource path="res://assets/life.png" type="Texture" id=3]
+[ext_resource path="res://assets/play.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 1 )
 
 [node name="HUD" type="CanvasLayer"]
@@ -26,11 +27,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ActLabel" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 944.0
+margin_right = 196.0
+margin_bottom = 979.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "ACT 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="LifeBar" type="HBoxContainer" parent="."]
-margin_left = 424.0
-margin_top = 984.0
-margin_right = 464.0
-margin_bottom = 998.0
+margin_left = 9.09495e-13
+margin_top = 3.63798e-12
+margin_right = 40.0
+margin_bottom = 14.0
 rect_scale = Vector2( 5, 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -115,7 +128,7 @@ margin_top = 128.0
 margin_right = 96.0
 margin_bottom = 160.0
 rect_pivot_offset = Vector2( 432, 80 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "Retry"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -126,15 +139,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -96.0
-margin_top = 52.0
-margin_right = 96.0
-margin_bottom = 84.0
+margin_left = -56.0
+margin_top = 24.0
+margin_right = 40.0
+margin_bottom = 104.0
 rect_pivot_offset = Vector2( 432, 80 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PlaySprite" type="Sprite" parent="StartButton"]
+position = Vector2( 48, 39.9999 )
+scale = Vector2( 3.25, 3.25 )
+texture = ExtResource( 4 )
 [connection signal="pressed" from="RetryButton" to="." method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]

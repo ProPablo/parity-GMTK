@@ -10,6 +10,7 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
+
 }
 
 [application]
@@ -26,6 +27,8 @@ Global="*res://Global.gd"
 
 window/size/width=576
 window/size/height=1024
+window/size/test_width=288
+window/size/test_height=512
 window/handheld/orientation="portrait"
 window/stretch/mode="2d"
 window/stretch/aspect="keep_width"
@@ -45,9 +48,6 @@ restart={
 2d_physics/layer_3="Item"
 2d_physics/layer_4="Player_Pickup"
 2d_physics/layer_5="Slot"
-2d_physics/layer_6="QueueSlot"
-2d_physics/layer_7="Heart"
-2d_physics/layer_8="Parcel"
 
 [rendering]
 
