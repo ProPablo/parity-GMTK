@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Item.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Main.gd" type="Script" id=3]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ShakeCamera2D.gd" type="Script" id=5]
+[ext_resource path="res://sounds/game_over.wav" type="AudioStream" id=6]
+[ext_resource path="res://sounds/pickup.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/background act1.png" type="Texture" id=8]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
@@ -28,4 +31,18 @@ anchor_mode = 0
 rotating = true
 current = true
 script = ExtResource( 5 )
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="GameOver" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 6 )
+
+[node name="ItemPickup" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 7 )
+
+[node name="BackgroundSprite" type="Sprite" parent="."]
+position = Vector2( 288, 512 )
+texture = ExtResource( 8 )
+region_enabled = true
+region_rect = Rect2( 1030, 80, 576, 1024 )
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]

@@ -1,21 +1,17 @@
 extends CanvasLayer
 signal start_game;
 signal game_over;
-var timer = 1;
-const MAX_TIMER = 5;
-#var global_timer = get_parent().global_timer
-#var QUEUE_MAX_TIME = get_parent().QUEUE_MAX_TIME
-#var life_count = get_parent().life_count
+
+var life = preload("res://assets/life.png")
+var life_empty = preload("res://assets/life_empty.png")
+
 var global_timer = 0;
-var QUEUE_MAX_TIME = 1;
+var QUEUE_MAX_TIME = 2;
 var life_count = 3;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	timer = MAX_TIMER
 	global_timer = QUEUE_MAX_TIME;
-	$LifeLabel.text = str(life_count)
-	
 	$RetryButton.hide();
 	hide();
 
@@ -37,22 +33,24 @@ func _process(delta):
 		global_timer = QUEUE_MAX_TIME;
 		_on_global_timer_timeout()
 	global_timer -= delta;
-	
-	# cooldown type concept
-	if (timer <= 0): 
-		timer = MAX_TIMER;
-	timer -= delta;
-	var x = str("%.2f" % timer)
-	var y = x.split(".");
-	$InventoryHUD/InventoryTimerLabel.text = y[0] + " : " + y[1]
 
 func _on_global_timer_timeout():
 	life_count -= 1;
-	$LifeLabel.text = str(life_count)
+	display_heart()
+	$LifeDown.play();
 	if (life_count <= 0): 
-		print("YOU HAVE FAILED");
-		$RetryButton.show();
 		emit_signal("game_over")
+		$RetryButton.show();
+
+func display_heart():
+	var life_bar = get_node("LifeBar")
+	for i in life_bar.get_child_count():
+		life_bar.get_child(i)
+		if (life_count > i):
+			life_bar.get_child(i).texture = life
+		else:
+			life_bar.get_child(i).texture = life_empty
+
 
 func _on_RetryButton_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)

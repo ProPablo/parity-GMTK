@@ -50,6 +50,7 @@ func create_queue():
 
 func _on_Item_pickup(item):
 	var is_full = true;
+	$Sounds/ItemPickup.play();
 	for i in range(total_slots):
 		if !slots[i].item:
 			slots[i].insert_item(item)
@@ -64,6 +65,7 @@ func _on_Item_pickup(item):
 func _on_gameover():
 	game_over = true
 	$ItemTimer.stop();
+	$Sounds/GameOver.play();
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.gd" type="Script" id=2]
 [ext_resource path="res://assets/hole.png" type="Texture" id=3]
 [ext_resource path="res://assets/main_character.png" type="Texture" id=4]
 [ext_resource path="res://assets/dotted.png" type="Texture" id=5]
+[ext_resource path="res://assets/black_hole.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Hole_rotate"
@@ -90,6 +91,21 @@ tracks/0/keys = {
 "values": [ 1, 2 ]
 }
 
+[sub_resource type="ParticlesMaterial" id=7]
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 424.02
+initial_velocity_random = 0.37
+angular_velocity_random = 1.0
+orbit_velocity = 0.41
+orbit_velocity_random = 1.0
+linear_accel = 29.49
+linear_accel_random = 1.0
+
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
 
@@ -111,7 +127,6 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Influence"]
-position = Vector2( 0.280594, 0 )
 shape = SubResource( 3 )
 
 [node name="CollisionSprite" type="Sprite" parent="Influence"]
@@ -147,6 +162,14 @@ region_rect = Rect2( 2, 1, 96, 62 )
 autoplay = "Dangling_Right"
 anims/Dangling_Left = SubResource( 5 )
 anims/Dangling_Right = SubResource( 6 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
+amount = 60
+lifetime = 0.5
+speed_scale = 0.51
+process_material = SubResource( 7 )
+texture = ExtResource( 6 )
 [connection signal="body_entered" from="Influence" to="." method="_on_Influence_body_entered"]
 [connection signal="body_exited" from="Influence" to="." method="_on_Influence_body_exited"]
 [connection signal="body_entered" from="Pickup" to="." method="_on_Pickup_body_entered"]
