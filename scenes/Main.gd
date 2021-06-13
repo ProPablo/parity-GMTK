@@ -5,6 +5,7 @@ const QueueSlot = preload("res://scenes/QueueSlot.tscn")
 onready var global = $"/root/Global"
 #Stays constant thanks to settings
 var global_timer = 0;
+var is_shown_start;
 var QUEUE_MAX_TIME = 2;
 var life_count = 3;
 
@@ -12,6 +13,7 @@ export var queue_slots = 6;
 export var total_slots = 4;
 export var slots_margin = 0.3;
 var game_over = false;
+var game_start = false;
 var QUEUE_SCALE = 0;
 var QUEUE_MAX = 1;
 
@@ -25,12 +27,14 @@ var inventory = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	is_shown_start = global.is_shown_start
 	global_timer = QUEUE_MAX_TIME;
-	
+	$HUD.hide();
 	$ItemTimer.start();
 	$QueueTimer.start();
 	$Player.connect("item_collected", self, "_on_Item_pickup")
 	$HUD.connect("game_over", self, "_on_gameover")
+	$HUD.connect("start_game", self, "_on_gamestart")
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	create_inventory()
 	pass # Replace with function body.
@@ -52,7 +56,7 @@ func create_inventory():
 		slots.append(slot);
 
 func _on_Item_pickup(item):
-	if (game_over):
+	if (game_over || !game_start):
 		return;
 	$ShakeCamera2D.add_trauma(0.1);
 	var is_full = true;
@@ -77,11 +81,23 @@ func _on_gameover():
 	$GameOver.play();
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+func _on_gamestart():
+	get_tree().call_group("items", "queue_free");
+	game_start = true
+	$HUD/PointLabel.show();
+	$HUD/InventoryHUD.show()
+	$HUD/QueueHUD.show();
+	$HUD/GOLabel.hide();
+	$HUD/TitleLabel.hide();
+	$HUD/LifeBar.show();
+	$HUD/StartButton.hide();
+	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (global_timer <= 0 && life_count > 0): 
 		global_timer = QUEUE_MAX_TIME;
-#		_on_global_timer_timeout()
+		_on_global_timer_timeout()
 	global_timer -= delta;
 	
 	check_crafting()
@@ -111,20 +127,22 @@ func check_crafting():
 			for s in crafting_slots:
 				slots[s]._start_crafting(q)
 	
-func _on_ItemTimer_timeout():
+func _on_ItemTimer_timeout(): 
 	var item = Item.instance();
 	add_child(item);
-	var item_range = rand_range(0, global.screen_size.x);
+	var item_range = rand_range(0, global.screen_size.x*2);
 	item.position = Vector2(item_range, $ItemPosition.position.y);
 	var dict_keys = global.asset_dict[global.current_act].keys()
-#	var rand_index = randi() % dict_keys.size()
-	var rand_index = randi() % 2
+	var rand_index = randi() % dict_keys.size()
+#	var rand_index = randi() % 2
 #	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
 	item._loadJSON(current_item_data, current_item_name, Vector2(rand_range(0, .5), rand_range(50, 300)));
 
 func _on_QueueTimer_timeout():
+	if (!game_start):
+		return;
 	var size_of_list = queues.size()
 	var queue_instance = QueueSlot.instance()
 	$HUD/QueueHUD.add_child(queue_instance)
@@ -148,10 +166,12 @@ func queue_remove():
 		queues[i].adjust_index(i)
 
 func _on_global_timer_timeout():
+	if (!game_start):
+		return;
 	$ShakeCamera2D.add_trauma(0.4)
 	life_count -= 1;
 	$HUD.display_heart()
-	# $LifeDown.play();
+	$LifeDown.play();
 	if (life_count <= 0): 
 		_on_gameover();
 		$HUD/RetryButton.show();

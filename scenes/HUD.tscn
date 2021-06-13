@@ -1,20 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/clover-sans.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/HUD.gd" type="Script" id=2]
 [ext_resource path="res://assets/life.png" type="Texture" id=3]
-[ext_resource path="res://assets/bin.png" type="Texture" id=4]
-[ext_resource path="res://assets/bg.png" type="Texture" id=5]
-[ext_resource path="res://assets/clock.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -23,14 +14,11 @@ font_data = ExtResource( 1 )
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
 
-[node name="Background" type="Sprite" parent="."]
-position = Vector2( 132.25, 47 )
-scale = Vector2( 265.5, 95 )
-texture = ExtResource( 5 )
-
 [node name="PointLabel" type="Label" parent="."]
-margin_right = 188.0
-margin_bottom = 35.0
+margin_left = 8.0
+margin_top = 984.0
+margin_right = 196.0
+margin_bottom = 1019.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Points: 000"
@@ -38,20 +26,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LifeLabel" type="Label" parent="."]
-anchor_top = 0.062
-anchor_right = 1.0
-anchor_bottom = 0.094
-margin_top = -7.488
-margin_right = -388.0
-margin_bottom = -5.256
-rect_scale = Vector2( 1.1, 1.1 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "LIFE:"
+[node name="LifeBar" type="HBoxContainer" parent="."]
+margin_left = 424.0
+margin_top = 984.0
+margin_right = 464.0
+margin_bottom = 998.0
+rect_scale = Vector2( 5, 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="1" type="TextureRect" parent="LifeBar"]
+margin_right = 7.0
+margin_bottom = 14.0
+texture = ExtResource( 3 )
+
+[node name="2" type="TextureRect" parent="LifeBar"]
+margin_left = 11.0
+margin_right = 18.0
+margin_bottom = 14.0
+texture = ExtResource( 3 )
+
+[node name="3" type="TextureRect" parent="LifeBar"]
+margin_left = 22.0
+margin_right = 29.0
+margin_bottom = 14.0
+texture = ExtResource( 3 )
 
 [node name="GOLabel" type="Label" parent="."]
 anchor_top = 0.437
@@ -69,6 +69,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TitleLabel" type="Label" parent="."]
+anchor_top = 0.437
+anchor_right = 1.0
+anchor_bottom = 0.506
+margin_top = 0.511993
+margin_right = -288.0
+margin_bottom = -35.144
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "PARITY"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="InventoryHUD" type="Control" parent="."]
 anchor_top = 0.859
 anchor_right = 1.0
@@ -78,26 +94,6 @@ margin_bottom = -16.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="InventoryTimerLabel" type="Label" parent="InventoryHUD"]
-visible = false
-margin_left = 80.0
-margin_right = 136.0
-margin_bottom = 38.0
-custom_fonts/font = SubResource( 2 )
-text = "00:00"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InventoryTimerSprite" type="Sprite" parent="InventoryHUD"]
-visible = false
-position = Vector2( 56, 0 )
-scale = Vector2( 0.6875, 0.890625 )
-texture = ExtResource( 4 )
-centered = false
 
 [node name="QueueHUD" type="Control" parent="."]
 anchor_left = 1.0
@@ -109,34 +105,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="QueueTimerLabel" type="Label" parent="QueueHUD"]
-visible = false
-margin_left = 222.003
-margin_top = 5.99999
-margin_right = 275.003
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 3 )
-text = "00:00 "
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="QueueTimerSprite" type="Sprite" parent="QueueHUD"]
-visible = false
-position = Vector2( 206.003, 14 )
-scale = Vector2( 0.875, 0.875 )
-texture = ExtResource( 6 )
-
 [node name="RetryButton" type="Button" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -96.0
-margin_top = 52.0
+margin_top = 128.0
 margin_right = 96.0
-margin_bottom = 84.0
+margin_bottom = 160.0
 rect_pivot_offset = Vector2( 432, 80 )
 custom_fonts/font = SubResource( 4 )
 text = "Retry"
@@ -159,31 +136,5 @@ text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="LifeBar" type="HBoxContainer" parent="."]
-margin_left = 120.0
-margin_top = 56.0
-margin_right = 160.0
-margin_bottom = 70.0
-rect_scale = Vector2( 5, 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="1" type="TextureRect" parent="LifeBar"]
-margin_right = 7.0
-margin_bottom = 14.0
-texture = ExtResource( 3 )
-
-[node name="2" type="TextureRect" parent="LifeBar"]
-margin_left = 11.0
-margin_right = 18.0
-margin_bottom = 14.0
-texture = ExtResource( 3 )
-
-[node name="3" type="TextureRect" parent="LifeBar"]
-margin_left = 22.0
-margin_right = 29.0
-margin_bottom = 14.0
-texture = ExtResource( 3 )
 [connection signal="pressed" from="RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]

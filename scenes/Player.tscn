@@ -127,6 +127,7 @@ position = Vector2( 0.280594, 0 )
 shape = SubResource( 3 )
 
 [node name="CollisionSprite" type="Sprite" parent="Influence"]
+modulate = Color( 1, 1, 1, 0.266667 )
 position = Vector2( -1.06096e-05, -7.62939e-06 )
 rotation = 6.28319
 scale = Vector2( 0.272, 0.272 )

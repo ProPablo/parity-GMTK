@@ -7,17 +7,24 @@ var life_empty = preload("res://assets/life_empty.png")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$RetryButton.hide();
-	hide();
+	$GOLabel.hide();
 
 func hide():
-#	$PointLabel.hide();
-#	$InventoryHUD/InventorySprite.hide();
-#	$InventoryHUD/InventoryTimerLabel.hide();
-#	$InventoryHUD/InventoryTimerSprite.hide();
-#	$QueueHUD/QueueSprite.hide();
-#	$QueueHUD/QueueTimerLabel.hide();
-#	$QueueHUD/QueueTimerSprite.hide();
+	$PointLabel.hide();
+	$InventoryHUD.hide()
+	$QueueHUD/.hide();
 	$GOLabel.hide();
+	$StartButton.hide();
+	$LifeBar.hide();
+	$StartButton.show();
+	
+func show():
+	$PointLabel.show();
+	$InventoryHUD.show()
+	$QueueHUD.show();
+	$GOLabel.show();
+	$StartButton.show();
+	$LifeBar.show();
 	$StartButton.hide();
 	
 func _on_StartButton_pressed():

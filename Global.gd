@@ -1,5 +1,5 @@
 extends Node
-
+var is_shown_start = false;
 var asset_dict = {};
 # var inventory_slots = [];
 

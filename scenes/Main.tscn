@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/Item.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/background act1.png" type="Texture" id=8]
 [ext_resource path="res://sounds/life_down.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/planet.png" type="Texture" id=10]
+[ext_resource path="res://assets/act_1/phone_male.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Planet"
@@ -79,5 +80,12 @@ frame = 24
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlanetSprite"]
 autoplay = "Planet"
 anims/Planet = SubResource( 1 )
+
+[node name="outside_stuff_tileset" type="Sprite" parent="."]
+position = Vector2( 472, 656 )
+texture = ExtResource( 11 )
+hframes = 10
+region_enabled = true
+region_rect = Rect2( 0, 200, 144, 24 )
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
 [connection signal="timeout" from="QueueTimer" to="." method="_on_QueueTimer_timeout"]
