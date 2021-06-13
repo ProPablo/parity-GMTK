@@ -13,6 +13,10 @@ scale = Vector2( 1.69375, 2.03516 )
 texture = ExtResource( 1 )
 
 [node name="AddLabel" parent="." instance=ExtResource( 2 )]
+margin_left = -8.0
+margin_top = -24.0
+margin_right = 23.0
+margin_bottom = 30.0
 
 [node name="clock" type="Sprite" parent="."]
 position = Vector2( -72.5, 0 )

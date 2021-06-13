@@ -11,7 +11,8 @@
 			],
 			"scale": [2, 2],
 			"hf": 3,
-			"vf": 2
+			"vf": 2,
+			"anim": 2
 		},
 		"Student_bike": {
 			"text": "res://assets/act_1/student bike.png",
@@ -32,34 +33,29 @@
 			],
 			"scale": [2, 2],
 			"hf": 3,
-			"vf": 4,
-			"anim": 0.5
+			"vf": 4, 
+			"anim": 2
 		},
-		"Student_female_3": {
-			"text": "res://assets/act_1/student female3.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+		"Outside_flower": {
+			"text": "res://assets/act_1/outside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
-				0,
-				4,
-				96,
-				123
-			],
-			"scale": [2, 2],
-			"hf": 3,
-			"vf": 4
+				51,
+				5,
+				42,
+				41
+			]
 		},
-		"Student_female_4": {
-			"text": "res://assets/act_1/student female4.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+		"Inside_TV": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
-				0,
-				4,
-				96,
-				123
+				3,
+				234,
+				26,
+				18
 			],
-			"scale": [2, 2],
-			"hf": 3,
-			"vf": 4
+			"scale": [2, 2]
 		},
 		"Student_male_1": {
 			"text": "res://assets/act_1/student male1.png",
@@ -72,33 +68,30 @@
 			],
 			"scale": [2, 2],
 			"hf": 3,
-			"vf": 4
+			"vf": 4, 
+			"anim": 2
 		},
-		"Student_male_2": {
-			"text": "res://assets/act_1/student male2.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+		"Inside_Cabinet": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
-				0,
-				4,
-				96,
-				123
+				195,
+				952,
+				27,
+				36
 			],
-			"scale": [2, 2],
-			"hf": 3,
-			"vf": 4
+			"scale": [2, 2]
 		},
-		"Student_male_3": {
-			"text": "res://assets/act_1/student male3.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+		"Inside_Globe": {
+			"text": "res://assets/act_1/inside_stuff_tileset.png",
+			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
-				0,
-				4,
-				96,
-				123
+				193,
+				1057,
+				13,
+				21
 			],
-			"scale": [2, 2],
-			"hf": 3,
-			"vf": 4
+			"scale": [2, 2]
 		},
 		"Student_male_4": {
 			"text": "res://assets/act_1/student male4.png",
@@ -111,7 +104,8 @@
 			],
 			"scale": [2, 2],
 			"hf": 3,
-			"vf": 4
+			"vf": 4, 
+			"anim": 2
 		}
 		
 	}

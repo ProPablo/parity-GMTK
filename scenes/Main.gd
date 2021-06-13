@@ -8,6 +8,9 @@ var screen_size;
 export var queue_slots = 6;
 export var total_slots = 4;
 export var slots_margin = 0.3;
+var game_over = false;
+var QUEUE_SCALE = 0;
+var QUEUE_MAX = 1;
 
 #var inventory = []
 var queue = []
@@ -19,6 +22,7 @@ func _ready():
 	$ItemTimer.start();
 	$QueueTimer.start();
 	$Player.connect("item_collected", self, "_on_Item_pickup")
+	$HUD.connect("game_over", self, "_on_gameover")
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	print(slots)
 	create_inventory()
@@ -40,16 +44,9 @@ func create_inventory():
 		slot.position = Vector2(0.5 * div_margin + i* div_x + 0.5*div_x, hud_size.y/2 )
 		slots.append(slot);
 
-#func create_queue():
-
-#	var queue_hud_size = $HUD/QueueHUD.get_rect().size
-#	for i in range(queue_slots):
-#		queue.append(null);
-#		modulate.a8 = 155;
-#
-
 func _on_Item_pickup(item):
 	var is_full = true;
+	$ItemPickup.play();
 	for i in range(total_slots):
 		if !slots[i].item:
 			slots[i].insert_item(item)
@@ -61,6 +58,12 @@ func _on_Item_pickup(item):
 		item.queue_free()
 #	inventory.append(item) 
 
+func _on_gameover():
+	game_over = true
+	$ItemTimer.stop();
+	$QueueTimer.stop();
+	$GameOver.play();
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -76,14 +79,17 @@ func _on_ItemTimer_timeout():
 	
 	var dict_keys = global.asset_dict[global.current_act].keys()
 	var rand_index = round(rand_range(0, dict_keys.size() - 1))
-	print(rand_index)
+#	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
 	item._loadJSON(current_item_data);
 
-
-
 func _on_QueueTimer_timeout():
+	var is_full = true;
+	print(queue)
 	var QueueItem = QueueSlot.instance()
 	add_child(QueueItem)
+	QUEUE_SCALE += 1;
+	if is_full:
+		print("Queue full")
 	pass # Replace with function body.

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.gd" type="Script" id=2]
 [ext_resource path="res://assets/hole.png" type="Texture" id=3]
 [ext_resource path="res://assets/main_character.png" type="Texture" id=4]
 [ext_resource path="res://assets/dotted.png" type="Texture" id=5]
+[ext_resource path="res://assets/black_hole.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Hole_rotate"
@@ -91,6 +92,16 @@ tracks/0/keys = {
 "values": [ 1, 2 ]
 }
 
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 141.46
+angular_velocity_random = 1.0
+orbit_velocity = 0.24
+orbit_velocity_random = 0.0
+linear_accel = 50.0
+
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
 
@@ -117,15 +128,15 @@ shape = SubResource( 3 )
 
 [node name="CollisionSprite" type="Sprite" parent="Influence"]
 position = Vector2( -1.06096e-05, -7.62939e-06 )
-rotation = 2.54469
+rotation = 6.28319
 scale = Vector2( 0.272, 0.272 )
 texture = ExtResource( 5 )
 
 [node name="Hole" type="Sprite" parent="."]
-rotation = 3.7385
+z_index = 1
 texture = ExtResource( 3 )
 hframes = 50
-frame = 6
+frame = 2
 
 [node name="Pickup" type="Area2D" parent="."]
 collision_layer = 8
@@ -143,8 +154,8 @@ scale = Vector2( 2, 2 )
 rotation = -1.5708
 texture = ExtResource( 4 )
 offset = Vector2( 0, 15.757 )
-hframes = 3
 vframes = 2
+hframes = 3
 frame = 4
 region_rect = Rect2( 2, 1, 96, 62 )
 
@@ -153,6 +164,12 @@ autoplay = "Dangling_Right"
 anims/Dangling_Left = SubResource( 5 )
 anims/Dangling_Right = SubResource( 6 )
 
+[node name="HoleParticles" type="Particles2D" parent="."]
+amount = 60
+lifetime = 0.5
+speed_scale = 0.53
+process_material = SubResource( 7 )
+texture = ExtResource( 6 )
 [connection signal="body_entered" from="Influence" to="." method="_on_Influence_body_entered"]
 [connection signal="body_exited" from="Influence" to="." method="_on_Influence_body_exited"]
 [connection signal="body_entered" from="Pickup" to="." method="_on_Pickup_body_entered"]

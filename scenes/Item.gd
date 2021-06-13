@@ -55,12 +55,14 @@ func _loadJSON(current_data):
 			counter+=1
 #			print(frame)
 	
-	#Fix to wierdness
+		#Fix to wierdness
 		anim.value_track_set_update_mode(0, Animation.UPDATE_DISCRETE)
 		anim.loop = true;
 		
 		$ItemAnim.add_animation("item_anim", anim)
 		$ItemAnim.play("item_anim")
+	else:
+		$ItemAnim.play("rotate");
 
 	if current_data.has("mass"):
 		mass = current_data["mass"]

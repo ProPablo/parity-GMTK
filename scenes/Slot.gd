@@ -23,6 +23,9 @@ func insert_item(new_item):
 
 func _on_slot_expire():
 	print("Fukin done")
+	# reset position so it's not maligned
+	$SlotSprite.position.x = item.position.x
+	$SlotSprite.position.y = item.position.y
 	item.queue_free()
 	item = null
 	$SlotSprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
