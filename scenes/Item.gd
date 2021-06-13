@@ -8,20 +8,15 @@ var points = 1;
 var is_slotted = false;
 
 var current_item = "Student_bike"
+onready var global = $"/root/Global"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var current_act = "Act1" # placeholder
-	# var dict_keys = $"/root/Global".asset_dict[current_act].keys()
-	# var rand_index = round(rand_range(0, dict_keys.size() - 1)) ;
-	# print(rand_index)
-	# var current_item = dict_keys[rand_index] # placeholder
-	_loadJSON(current_act, current_item);
-
-func _loadJSON(current_act, current_item):
-	var dict = $"/root/Global".asset_dict
-	var current_data = dict[current_act][current_item]
+	print(global)
+	pass
 	
+func _loadJSON(current_data):
+	var dict = global.asset_dict
 	$ItemSprite.texture = load(current_data["text"])
 	$CollisionShape2D.set_shape(load(current_data["collision"]));
 	if current_data.has("region"):
@@ -82,6 +77,16 @@ func _physics_process(delta):
 		return
 	velocity += Vector2(0,1) * GRAVITY * delta;
 	move_and_slide(velocity);
+
+func item_to_queue(new_item, y_size):
+	_loadJSON(new_item);
+	is_slotted = true;
+#	TODO abstract scaling
+	var size = $ItemSprite.get_rect().size * $ItemSprite.scale;
+	var new_scale = y_size / size.y;
+	$ItemSprite.scale *= new_scale;
+	pass
+
 
 func item_to_inventory(slot_number):
 	print("Going to slot" + str(slot_number))

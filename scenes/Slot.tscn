@@ -34,6 +34,8 @@ tracks/1/keys = {
 
 [node name="InventorySlot" type="Node2D"]
 script = ExtResource( 2 )
+shake_scalar = 10.0
+expire_time = 6.0
 
 [node name="SlotSprite" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )

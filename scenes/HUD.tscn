@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/clover-sans.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/HUD.gd" type="Script" id=2]
 [ext_resource path="res://assets/bin.png" type="Texture" id=4]
-[ext_resource path="res://scenes/QueueSlot.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/clock.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
@@ -80,8 +79,8 @@ centered = false
 [node name="QueueHUD" type="Control" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -275.259
-margin_bottom = 112.0
+margin_left = -165.0
+margin_bottom = 298.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -102,8 +101,6 @@ __meta__ = {
 position = Vector2( 206.003, 14 )
 scale = Vector2( 0.875, 0.875 )
 texture = ExtResource( 6 )
-
-[node name="QueueSlotSprite" parent="QueueHUD" instance=ExtResource( 5 )]
 
 [node name="RetryButton" type="Button" parent="."]
 anchor_left = 0.5

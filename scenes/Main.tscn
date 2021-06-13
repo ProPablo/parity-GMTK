@@ -29,4 +29,8 @@ rotating = true
 current = true
 script = ExtResource( 5 )
 
+[node name="QueueTimer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
+[connection signal="timeout" from="QueueTimer" to="." method="_on_QueueTimer_timeout"]

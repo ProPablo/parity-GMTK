@@ -4,11 +4,18 @@ signal item_collected(item)
 
 export var MASS = 200
 
+onready var p_div = $PlayerContainer;
+var angular_velocity = 0
+export var GRAVITY = 98
+
+
 #var G = 6.6743e-1
 export var G = 12
 var influenced = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	p_div.rotation = 3* PI/4;
 	pass # Replace with function body.
 
 
@@ -21,7 +28,7 @@ func _process(delta):
 #	print(accel)
 		body.velocity += vec_towards * accel * delta;
 	
-	$PlayerSprite.rotation_degrees = 90;
+#	rotation = pi/2 to -pi/2
 
 func _input(event):
 	if (event is InputEventMouseMotion):
@@ -40,6 +47,14 @@ func _input(event):
 #		if (event.relative.x < 0):
 #			$DanglingAnimation.assigned_animation = "Dangling_left"
 
+func _physics_process(delta):
+#	var rot = p_div.rotation;
+##	var directional_vec = Vector2(cos(rot), sin(rot))
+##	print(directional_vec)
+#	var r = 64;
+#	angular_velocity += (GRAVITY * delta *sin(rot))  / r
+#	p_div.rotation += angular_velocity * delta;
+	pass
 
 func _on_Influence_body_entered(body):
 	if body.is_slotted:

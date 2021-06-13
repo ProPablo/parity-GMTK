@@ -2,8 +2,8 @@ extends Node
 
 var asset_dict = {};
 # var inventory_slots = [];
-var inventory_offset = 32;
-var slot_increment = 32;
+
+var current_act = "Act1"
 
 # Declare member variables here. Examples:
 # var a = 2

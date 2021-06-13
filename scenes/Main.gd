@@ -1,6 +1,8 @@
 extends Node2D
 export (PackedScene) var Item;
 const Slot = preload("res://scenes/Slot.tscn")
+const QueueSlot = preload("res://scenes/QueueSlot.tscn")
+onready var global = $"/root/Global"
 #Stays constant thanks to settings
 var screen_size;
 export var queue_slots = 6;
@@ -15,6 +17,7 @@ var slots = []
 func _ready():
 	screen_size = get_viewport_rect().size;
 	$ItemTimer.start();
+	$QueueTimer.start();
 	$Player.connect("item_collected", self, "_on_Item_pickup")
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	print(slots)
@@ -33,23 +36,17 @@ func create_inventory():
 		$HUD/InventoryHUD.add_child(slot)
 		slot.name = "InventorySlot%d" % i
 		slot.index = i
-		# var new_pos = Vector2(0, hud_size.y/2)
-		# var slot_sprite = slot.get_child(0);
-		# var div_margin = (div_x - slot_sprite.get_rect().size.x) /2;
-		# if (total_slots % 2 == 0):
-		# 	new_pos.x = hud_size.x/2;
-		# 	pass
-		# else:
-		# 	new_pos.x = hud_size.x/2;
+
 		slot.position = Vector2(0.5 * div_margin + i* div_x + 0.5*div_x, hud_size.y/2 )
 		slots.append(slot);
 
-# func create_queue():
-# 	var queue_hud_size = $HUD/QueueHUD.get_rect().size
-# 	for i in range(queue_slots):
-# 		queue.append(null);
-# 		modulate.a8 = 155;
-		
+#func create_queue():
+
+#	var queue_hud_size = $HUD/QueueHUD.get_rect().size
+#	for i in range(queue_slots):
+#		queue.append(null);
+#		modulate.a8 = 155;
+#
 
 func _on_Item_pickup(item):
 	var is_full = true;
@@ -76,4 +73,17 @@ func _on_ItemTimer_timeout():
 	add_child(item);
 	var item_range = rand_range(0, screen_size.x);
 	item.position = Vector2(item_range, $ItemPosition.position.y);
+	
+	var dict_keys = global.asset_dict[global.current_act].keys()
+	var rand_index = round(rand_range(0, dict_keys.size() - 1))
+	print(rand_index)
+	var current_item_name = dict_keys[rand_index]
+	var current_item_data = global.asset_dict[global.current_act][current_item_name]
+	item._loadJSON(current_item_data);
 
+
+
+func _on_QueueTimer_timeout():
+	var QueueItem = QueueSlot.instance()
+	add_child(QueueItem)
+	pass # Replace with function body.

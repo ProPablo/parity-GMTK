@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 49 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 length = 20.0
 loop = true
 tracks/0/type = "value"
@@ -50,35 +50,36 @@ tracks/1/keys = {
 "values": [ 360.0, 0.0 ]
 }
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=3]
 radius = 104.689
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=4]
 radius = 23.8924
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 resource_name = "Dangling_Left"
-length = 0.8
+length = 0.4
+loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/path = NodePath("PlayerContainer/PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 4, 5 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=6]
 resource_name = "Dangling_Right"
 length = 0.4
 loop = true
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/path = NodePath("PlayerContainer/PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -99,7 +100,7 @@ anims/Hole_rotate = SubResource( 1 )
 
 [node name="RotationAnimation" type="AnimationPlayer" parent="."]
 autoplay = "Rotate_Hole"
-anims/Rotate_Hole = SubResource( 5 )
+anims/Rotate_Hole = SubResource( 2 )
 
 [node name="icon" type="Sprite" parent="."]
 visible = false
@@ -112,7 +113,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Influence"]
 position = Vector2( 0.280594, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="CollisionSprite" type="Sprite" parent="Influence"]
 position = Vector2( -1.06096e-05, -7.62939e-06 )
@@ -131,22 +132,27 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
-shape = SubResource( 10 )
+shape = SubResource( 4 )
 
-[node name="PlayerSprite" type="Sprite" parent="."]
-position = Vector2( 0, 36.391 )
+[node name="PlayerContainer" type="Node2D" parent="."]
+position = Vector2( 0, 35 )
+rotation = 1.5708
 scale = Vector2( 2, 2 )
+
+[node name="PlayerSprite" type="Sprite" parent="PlayerContainer"]
+rotation = -1.5708
 texture = ExtResource( 4 )
 offset = Vector2( 0, 15.757 )
-vframes = 2
 hframes = 3
-frame = 1
+vframes = 2
+frame = 4
 region_rect = Rect2( 2, 1, 96, 62 )
 
 [node name="DanglingAnimation" type="AnimationPlayer" parent="."]
 autoplay = "Dangling_Right"
-anims/Dangling_Left = SubResource( 8 )
-anims/Dangling_Right = SubResource( 9 )
+anims/Dangling_Left = SubResource( 5 )
+anims/Dangling_Right = SubResource( 6 )
+
 [connection signal="body_entered" from="Influence" to="." method="_on_Influence_body_entered"]
 [connection signal="body_exited" from="Influence" to="." method="_on_Influence_body_exited"]
 [connection signal="body_entered" from="Pickup" to="." method="_on_Pickup_body_entered"]

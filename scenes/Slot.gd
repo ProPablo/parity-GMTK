@@ -8,16 +8,18 @@ var item = null;
 var index = null;
 
 export var shake_scalar = 5.0
+export var expire_time = 2.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
+	$SlotAnimation.playback_speed = 1/expire_time;
 	pass # Replace with function body.
 
 func insert_item(new_item):
 	item = new_item
 	$SlotAnimation.play("Expiring");
 
-	$SlotAnimation.playback_speed = 2.0;
 
 func _on_slot_expire():
 	print("Fukin done")
@@ -30,5 +32,6 @@ func _on_slot_expire():
 func _process(delta):
 	if !item:
 		return
-	$SlotSprite.position.x = $SlotAnimation.current_animation_position  * shake_scalar
+	$SlotSprite.position.x = $SlotAnimation.current_animation_position  * shake_scalar * randf()
+	$SlotSprite.position.y = $SlotAnimation.current_animation_position  * shake_scalar * randf()
 	pass
