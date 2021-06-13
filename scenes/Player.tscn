@@ -136,7 +136,7 @@ texture = ExtResource( 5 )
 z_index = 1
 texture = ExtResource( 3 )
 hframes = 50
-frame = 2
+frame = 49
 
 [node name="Pickup" type="Area2D" parent="."]
 collision_layer = 8

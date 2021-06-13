@@ -1,5 +1,10 @@
 extends Node2D
 
+signal queue_expire;
+
+var is_expiring = false;
+var shake_scalar = 5.0
+
 var ITEM_MAX_RANGE = 2 # max items in recipe 
 var items = []
 onready var global = $"/root/Global"
@@ -22,26 +27,31 @@ var rng
 func _ready():
 	space = $QueueSlotSprite.get_rect().size.x * $QueueSlotSprite.scale.x
 	height = $QueueSlotSprite.get_rect().size.y * $QueueSlotSprite.scale.y 
+	$QueueSlotAnimation.playback_speed = 1 / expire_time;
 	parent_size = get_parent().get_rect().size
-
-	pass # Replace with function body.
-
-func init(input_index):
-	index = input_index
-	color = Color(randf(), randf(), randf(), 1)
-	$QueueSlotSprite.modulate = color
-	
-	var offset =  height * index + height/2 + space_between * height
-	position = Vector2(parent_size.x/2, offset + height*space_between*index)
-	adjust_index()
 	
 	var item1 = pick_item();
 	item1.position.x = -space/4
 	
 	var item2 = pick_item();
 	item2.position.x = space/4
+	_start_expiring()
+	
+	
+func _start_expiring():
+	is_expiring = true;
+	$QueueSlotAnimation.play("Expiring");
+	
+func _on_slot_expire():
+	print("Q dun")
+	items = null
+	index = 0;
+	$QueueSlotSprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
+	emit_signal("queue_expire")
 
-func adjust_index():
+func adjust_index(index):
+	var offset =  height * index + height/2 + space_between * height
+	position = Vector2(parent_size.x/2, offset + height*space_between*index)
 	var fade = 1 - fade_scale * index
 	modulate.a = fade
 	
@@ -67,5 +77,8 @@ func pick_item() -> KinematicBody2D:
 	return item;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if (!items):
+		return
+	$QueueSlotSprite.position.x = $QueueSlotAnimation.current_animation_position * shake_scalar * randf(); 
+	$QueueSlotSprite.position.y = $QueueSlotAnimation.current_animation_position * shake_scalar * randf();

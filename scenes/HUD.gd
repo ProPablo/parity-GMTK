@@ -36,7 +36,6 @@ func display_heart():
 		else:
 			life_bar.get_child(i).texture = life_empty
 
-
 func _on_RetryButton_pressed():
 	$GOLabel.hide();
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
