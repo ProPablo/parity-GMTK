@@ -3,7 +3,7 @@ extends Node2D
 signal queue_expire(index);
 
 var is_expiring = false;
-var shake_scalar = 5.0
+var shake_scalar = 16.0
 
 var ITEM_MAX_RANGE = 2 # max items in recipe 
 var items = []
@@ -11,7 +11,7 @@ onready var global = $"/root/Global"
 const Item = preload("res://scenes/Item.tscn")
 const Plus = preload("res://scenes/Plus.tscn")
 export var space_between = 0.05;
-export var expire_time = 5.0
+export var expire_time = 12.0
 export var fade_scale = 0.16
 
 var heart_location = Vector2(0,0);
@@ -84,8 +84,8 @@ func pick_item() -> KinematicBody2D:
 #	print("parent" + str(item.get_parent().name))
 	var dict_keys = global.asset_dict[global.current_act].keys()
 	# var rand_index = rng.randi_range(0, dict_keys.size() - 1)
-#	var rand_index = randi() % dict_keys.size()
-	var rand_index = randi() % 2
+	var rand_index = randi() % dict_keys.size()
+#	var rand_index = randi() % 2
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
 	item.item_to_queue(current_item_data, current_item_name, sprite.get_rect().size.y)

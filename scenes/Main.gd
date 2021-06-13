@@ -10,9 +10,10 @@ var is_shown_start;
 var QUEUE_MAX_TIME = 2;
 var life_count = 3;
 var points = 0;
+var next_act = false
 
 export var queue_slots = 6;
-export var total_slots = 4;
+export var total_slots = 5;
 export var slots_margin = 0.3;
 var game_over = false;
 var game_start = false;
@@ -48,7 +49,7 @@ func _ready():
 	$HUD/PointLabel.text = "Points: " + str(points)
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	create_inventory()
-	_on_gamestart()
+#	_on_gamestart()
 	pass # Replace with function body.
 
 func create_inventory():
@@ -71,11 +72,8 @@ func create_inventory():
 func _on_Item_pickup(item):
 	if (game_over || !game_start):
 		return;
-	points += 1;
-#	when item success crafted -> next act
-#	if (points == 10):
-#		next_act()
-	$HUD/PointLabel.text = "Points: " + str(points)
+	
+
 	$ShakeCamera2D.add_trauma(0.1);
 	var is_full = true;
 	$ItemPickup.play();
@@ -163,8 +161,8 @@ func _on_ItemTimer_timeout():
 	var item_range = rand_range(0, global.screen_size.x*2);
 	item.position = Vector2(item_range, $ItemPosition.position.y);
 	var dict_keys = global.asset_dict[global.current_act].keys()
-#	var rand_index = randi() % dict_keys.size()
-	var rand_index = randi() % 2
+	var rand_index = randi() % dict_keys.size()
+#	var rand_index = randi() % 2
 #	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
@@ -219,7 +217,15 @@ func _on_global_timer_timeout():
 
 func _on_CraftingTimer_timeout():
 	# just accept sparkly
-	
+	points += 1;
+	$HUD/PointLabel.text = "Points: " + str(points)
+	if (points >= 5 && !next_act):
+		next_act()
+		next_act = true;
+	if (points >= 10 ):
+		_on_gameover();
+		$HUD/GOLabel.text = "Thank you for playing."	
+		$HUD/GOLabel.show();			
 	
 #	var present = Present.instance()
 #	add_child(present)
@@ -236,4 +242,8 @@ func _on_CraftingTimer_timeout():
 	adjust_queues()
 	currently_crafting.queue_free()
 	currently_crafting = null
-	pass # Replace with function body.
+	
+	
+#	when item success crafted -> next act
+#	if (points == 10):
+#		next_act()

@@ -30,7 +30,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, -100.0 ]
+"values": [ 0.0, -470.0 ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -64,6 +64,5 @@ anims/Idle = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
-
 [connection signal="area_entered" from="." to="." method="_on_QueueSlot_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_QueueSlot_body_entered"]
