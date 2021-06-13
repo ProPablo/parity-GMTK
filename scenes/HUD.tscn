@@ -136,3 +136,4 @@ text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="RetryButton" to="." method="_on_RetryButton_pressed"]

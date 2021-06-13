@@ -6,6 +6,7 @@ var screen_size;
 export var queue_slots = 6;
 export var total_slots = 4;
 export var slots_margin = 0.3;
+var game_over = false;
 
 #var inventory = []
 var queue = []
@@ -16,6 +17,7 @@ func _ready():
 	screen_size = get_viewport_rect().size;
 	$ItemTimer.start();
 	$Player.connect("item_collected", self, "_on_Item_pickup")
+	$HUD.connect("game_over", self, "_on_gameover")
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	print(slots)
 	create_inventory()
@@ -33,22 +35,17 @@ func create_inventory():
 		$HUD/InventoryHUD.add_child(slot)
 		slot.name = "InventorySlot%d" % i
 		slot.index = i
-		# var new_pos = Vector2(0, hud_size.y/2)
-		# var slot_sprite = slot.get_child(0);
-		# var div_margin = (div_x - slot_sprite.get_rect().size.x) /2;
-		# if (total_slots % 2 == 0):
-		# 	new_pos.x = hud_size.x/2;
-		# 	pass
-		# else:
-		# 	new_pos.x = hud_size.x/2;
 		slot.position = Vector2(0.5 * div_margin + i* div_x + 0.5*div_x, hud_size.y/2 )
 		slots.append(slot);
 
-# func create_queue():
-# 	var queue_hud_size = $HUD/QueueHUD.get_rect().size
-# 	for i in range(queue_slots):
-# 		queue.append(null);
-# 		modulate.a8 = 155;
+func create_queue():
+	var hud_size = $HUD/QueueHUD.get_rect().size
+	var div_margin = hud_size.x * slots_margin;
+	
+	
+	for i in range(queue_slots):
+		queue.append(null);
+		modulate.a8 = 155;
 		
 
 func _on_Item_pickup(item):
@@ -64,6 +61,10 @@ func _on_Item_pickup(item):
 		item.queue_free()
 #	inventory.append(item) 
 
+func _on_gameover():
+	game_over = true
+	$ItemTimer.stop();
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

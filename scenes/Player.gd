@@ -1,15 +1,17 @@
 extends Node2D
 
 signal item_collected(item)
-
 export var MASS = 200
+var game_over
 
 #var G = 6.6743e-1
 export var G = 12
 var influenced = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	pass # Replace with function body.
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,7 +26,7 @@ func _process(delta):
 	$PlayerSprite.rotation_degrees = 90;
 
 func _input(event):
-	if (event is InputEventMouseMotion):
+	if (event is InputEventMouseMotion && !get_parent().game_over):
 		var mouse_pos = get_global_mouse_position();
 		position = mouse_pos;
 		# print(Input.get_last_mouse_speed())

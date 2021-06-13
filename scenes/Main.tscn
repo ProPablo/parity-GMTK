@@ -28,5 +28,4 @@ anchor_mode = 0
 rotating = true
 current = true
 script = ExtResource( 5 )
-
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]

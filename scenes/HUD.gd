@@ -7,7 +7,7 @@ const MAX_TIMER = 5;
 #var QUEUE_MAX_TIME = get_parent().QUEUE_MAX_TIME
 #var life_count = get_parent().life_count
 var global_timer = 0;
-var QUEUE_MAX_TIME = 5;
+var QUEUE_MAX_TIME = 1;
 var life_count = 3;
 
 # Called when the node enters the scene tree for the first time.
@@ -16,7 +16,10 @@ func _ready():
 	global_timer = QUEUE_MAX_TIME;
 	$LifeLabel.text = str(life_count)
 	
-#	$RetryButton.hide();
+	$RetryButton.hide();
+	hide();
+
+func hide():
 #	$PointLabel.hide();
 #	$InventoryHUD/InventorySprite.hide();
 #	$InventoryHUD/InventoryTimerLabel.hide();
@@ -25,14 +28,12 @@ func _ready():
 #	$QueueHUD/QueueTimerLabel.hide();
 #	$QueueHUD/QueueTimerSprite.hide();
 	$StartButton.hide();
-
+	
 func _on_StartButton_pressed():
 	emit_signal("start_game");
 
 func _process(delta):
-	pass
-
-	if (global_timer <= 0): 
+	if (global_timer <= 0 && life_count > 0): 
 		global_timer = QUEUE_MAX_TIME;
 		_on_global_timer_timeout()
 	global_timer -= delta;
@@ -43,7 +44,6 @@ func _process(delta):
 	timer -= delta;
 	var x = str("%.2f" % timer)
 	var y = x.split(".");
-	
 	$InventoryHUD/InventoryTimerLabel.text = y[0] + " : " + y[1]
 
 func _on_global_timer_timeout():
@@ -51,4 +51,9 @@ func _on_global_timer_timeout():
 	$LifeLabel.text = str(life_count)
 	if (life_count <= 0): 
 		print("YOU HAVE FAILED");
+		$RetryButton.show();
 		emit_signal("game_over")
+
+func _on_RetryButton_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	get_tree().reload_current_scene()
