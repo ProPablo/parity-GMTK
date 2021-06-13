@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
-export var GRAVITY = 98;
-
-var velocity = Vector2()
+export var velocity = Vector2(1,1)
 var mass = 1;
 var points = 1;
 var is_slotted = false;
@@ -15,7 +13,8 @@ func _ready():
 	print(global)
 	pass
 	
-func _loadJSON(current_data, input_name):
+func _loadJSON(current_data, input_name, input_velocity = Vector2(0,0)):
+	velocity = input_velocity
 	item_name = input_name
 	var dict = global.asset_dict
 	$ItemSprite.texture = load(current_data["text"])
@@ -78,7 +77,6 @@ func _process(delta):
 func _physics_process(delta):
 	if is_slotted:
 		return
-	velocity += Vector2(0,1) * GRAVITY * delta;
 	move_and_slide(velocity);
 
 func item_to_queue(new_item, input_name, y_size):
@@ -99,7 +97,8 @@ func item_to_inventory(slot_number):
 	is_slotted = true;
 #	Do Deferred shit when changing active tree or with physics
 	$CollisionShape2D.call_deferred("set", "disabled", true);
-	collision_layer = 0;
+	collision_layer = 0
+	$VisibilityNotifier2D.queue_free()
 	var slot = $"/root/Main".slots[slot_number];
 	
 	var slot_dimens = slot.get_child(0).get_rect().size * slot.get_child(0).scale;
@@ -119,3 +118,9 @@ func item_to_inventory(slot_number):
 	velocity = Vector2(0,0)
 	position = Vector2(0,0)
 	# position = Vector2($Main.slot_offset + slot_number * $Main.slot_increment, $Main.slot_height)
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	if is_slotted:
+		return
+	queue_free();

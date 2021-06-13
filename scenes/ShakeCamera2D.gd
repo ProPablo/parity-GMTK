@@ -3,7 +3,7 @@ extends Camera2D
 export var decay = 0.5
 export var max_offset = Vector2(100, 75)
 export var max_roll = 0.05
-var trauma = 0.0
+export var trauma = 0.0
 var trauma_power = 2
 
 # Called when the node enters the scene tree for the first time.

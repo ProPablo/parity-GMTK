@@ -49,6 +49,9 @@ func create_inventory():
 		slots.append(slot);
 
 func _on_Item_pickup(item):
+	if (game_over):
+		return;
+	$ShakeCamera2D.add_trauma(0.1);
 	var is_full = true;
 	$ItemPickup.play();
 	for i in range(total_slots):
@@ -64,6 +67,8 @@ func _on_Item_pickup(item):
 
 func _on_gameover():
 	game_over = true
+	$HUD/InventoryHUD.hide();
+	$HUD/QueueHUD.hide();
 	$ItemTimer.stop();
 	$QueueTimer.stop();
 	$GameOver.play();
@@ -73,7 +78,7 @@ func _on_gameover():
 func _process(delta):
 	if (global_timer <= 0 && life_count > 0): 
 		global_timer = QUEUE_MAX_TIME;
-		_on_global_timer_timeout()
+#		_on_global_timer_timeout()
 	global_timer -= delta;
 	if (Input.is_action_just_pressed("restart")):
 		get_tree().reload_current_scene()
@@ -84,23 +89,38 @@ func _on_ItemTimer_timeout():
 	add_child(item);
 	var item_range = rand_range(0, screen_size.x);
 	item.position = Vector2(item_range, $ItemPosition.position.y);
-	
 	var dict_keys = global.asset_dict[global.current_act].keys()
 	var rand_index = round(rand_range(0, dict_keys.size() - 1))
 #	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
-	item._loadJSON(current_item_data, current_item_name);
+	item._loadJSON(current_item_data, current_item_name, Vector2(rand_range(0, .5), rand_range(50, 300)));
 
 func _on_QueueTimer_timeout():
 	var size_of_list = queues.size()
 	var queue_instance = QueueSlot.instance()
 	$HUD/QueueHUD.add_child(queue_instance)
-	queue_instance.init(size_of_list)
+	queue_instance.adjust_index(size_of_list)
+	adjust_queues()
+	queue_instance.connect("queue_expire", self, "queue_remove")
 	queues.append(queue_instance)
+	
 	pass # Replace with function body.
 
+func adjust_queues():
+	for i in range(queues.size()):
+		queues[i].adjust_index(i)
+
+# add tween schmovement
+func queue_remove():
+	var delete_q = queues.pop_front();
+	delete_q.queue_free()
+	for i in range(queues.size()):
+		queues[i].index = i;
+		queues[i].adjust_index(i)
+
 func _on_global_timer_timeout():
+	$ShakeCamera2D.add_trauma(0.4)
 	life_count -= 1;
 	$HUD.display_heart()
 	# $LifeDown.play();

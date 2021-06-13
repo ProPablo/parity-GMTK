@@ -35,7 +35,8 @@ func _process(delta):
 func _input(event):
 	if (event is InputEventMouseMotion && !get_parent().game_over):
 		var mouse_pos = get_global_mouse_position();
-		position = mouse_pos;
+		position = Vector2(clamp(mouse_pos.x, 1, 566), mouse_pos.y);
+		
 		# print(Input.get_last_mouse_speed())
 			
 	#	# removing negative with one value
