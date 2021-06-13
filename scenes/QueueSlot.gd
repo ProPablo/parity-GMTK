@@ -1,6 +1,6 @@
 extends Node2D
 
-signal queue_expire;
+signal queue_expire(index);
 
 var is_expiring = false;
 var shake_scalar = 5.0
@@ -11,10 +11,10 @@ onready var global = $"/root/Global"
 const Item = preload("res://scenes/Item.tscn")
 const Plus = preload("res://scenes/Plus.tscn")
 export var space_between = 0.05;
-export var expire_time = 2.5
+export var expire_time = 5.0
 export var fade_scale = 0.16
 
-var heart_location = Vector2(128,80);
+var heart_location = Vector2(0,0);
 
 var space 
 var height 
@@ -24,6 +24,14 @@ var color = Color.white;
 var fire_at_heart = false
 var t = 0.0
 var fire_heart_speed = 10
+
+enum {
+	MOVING,
+	FIRE_AT_HEART,
+	CRAFTING,
+	FINISHED
+}
+var state = MOVING
 
 var rng
 onready var sprite = $Container/QueueSlotSprite
@@ -43,21 +51,23 @@ func _ready():
 	
 	var item2 = pick_item();
 	item2.position.x = space/4
-#	_start_expiring()
+	_start_expiring()
 	
+func enable_crafting():
+	$QueueSlotAnimation.stop()
 	
 func _start_expiring():
 	is_expiring = true;
 	$QueueSlotAnimation.play("Expiring");
 	
 func _on_slot_expire():
+	
 	print("Q dun")
 	items = null
 	index = 0;
 	sprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
 	fire_at_heart = true
-	
-	emit_signal("queue_expire")
+	emit_signal("queue_expire", index)
 
 func adjust_index(index):
 	var offset =  height * index + height/2 + space_between * height
@@ -88,13 +98,15 @@ func pick_item() -> KinematicBody2D:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (!items):
-		return
-	if (fire_at_heart):
-		global_position = global_position.move_toward(heart_location, delta * fire_heart_speed)
-	else:	
-	#	sprite.position.x = $QueueSlotAnimation.current_animation_position * shake_scalar * randf(); 
-		sprite.position.y = $QueueSlotAnimation.current_animation_position * shake_scalar * randf();
+	match state:
+		CRAFTING:
+			pass
+		MOVING:
+			sprite.position.y = $QueueSlotAnimation.current_animation_position * shake_scalar * randf();
+			sprite.position.x = $QueueSlotAnimation.current_animation_position * shake_scalar * randf(); 
+		FIRE_AT_HEART:
+			var vect = (global_position - heart_location).normalized();
+			global_position += vect * fire_heart_speed * delta;	
 
 
 func _on_QueueSlot_area_entered(area):
@@ -104,4 +116,5 @@ func _on_QueueSlot_area_entered(area):
 
 func _on_QueueSlot_body_entered(body):
 	print("found package")
+	body.queue_free()
 	pass # Replace with function body.

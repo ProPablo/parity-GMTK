@@ -89,7 +89,7 @@ func item_to_queue(new_item, input_name, y_size):
 
 
 func item_to_inventory(slot_number):
-	print("Going to slot" + str(slot_number))
+#	print("Going to slot" + str(slot_number))
 	if is_slotted:
 		return
 	

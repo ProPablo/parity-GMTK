@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/inventory.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Slot.gd" type="Script" id=2]
@@ -47,12 +47,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 15, 15 )
-
-[node name="InventorySlot" type="Area2D"]
-collision_layer = 16
-collision_mask = 16
+[node name="InventorySlot" type="Node2D"]
 script = ExtResource( 2 )
 shake_scalar = 10.0
 expire_time = 6.0
@@ -66,6 +61,3 @@ texture = ExtResource( 1 )
 autoplay = "Idle"
 anims/Expiring = SubResource( 1 )
 anims/Idle = SubResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )

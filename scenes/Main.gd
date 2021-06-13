@@ -23,6 +23,10 @@ var currently_crafting;
 var queues = []
 var slots = []
 
+var present = null
+
+var time_to_craft = 3.0
+
 # inevntory items stored in queue
 var inventory = []
 
@@ -38,6 +42,7 @@ func _ready():
 	$HUD.connect("start_game", self, "_on_gamestart")
 	# slots.append($HUD/InventoryHUD/InventorySlot1)
 	create_inventory()
+	_on_gamestart()
 	pass # Replace with function body.
 
 func create_inventory():
@@ -97,11 +102,11 @@ func _on_gamestart():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (global_timer <= 0 && life_count > 0): 
-		global_timer = QUEUE_MAX_TIME;
-		_on_global_timer_timeout()
-	global_timer -= delta;
-	if !currently_crafting:
+#	if (global_timer <= 0 && life_count > 0): 
+#		global_timer = QUEUE_MAX_TIME;
+##		_on_global_timer_timeout()
+#	global_timer -= delta;
+	if currently_crafting == null:
 		check_crafting()
 	
 	if (Input.is_action_just_pressed("restart")):
@@ -115,7 +120,7 @@ func check_crafting():
 		for q_item in q.items:
 #		Instead use inventory buffer queue (sorted slots in orer of oldest filled)
 			for slot in slots:
-				if !slot.item:
+				if slot.item ==null || slot.state != 2:
 					continue
 				if (slot.item._name == q_item._name && !selected_q.has(slot.index)):
 					selected_q.append(slot.index);
@@ -124,8 +129,10 @@ func check_crafting():
 		if (selected_q.size() >= q.items.size()):
 			crafting_slots = selected_q
 			currently_crafting = q
+			currently_crafting.enable_crafting()
 			for s in crafting_slots:
 				slots[s]._start_crafting(q)
+			$CraftingTimer.start()
 	
 func _on_ItemTimer_timeout(): 
 	var item = Item.instance();
@@ -133,8 +140,8 @@ func _on_ItemTimer_timeout():
 	var item_range = rand_range(0, global.screen_size.x*2);
 	item.position = Vector2(item_range, $ItemPosition.position.y);
 	var dict_keys = global.asset_dict[global.current_act].keys()
-	var rand_index = randi() % dict_keys.size()
-#	var rand_index = randi() % 2
+#	var rand_index = randi() % dict_keys.size()
+	var rand_index = randi() % 2
 #	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
@@ -158,12 +165,13 @@ func adjust_queues():
 		queues[i].adjust_index(i)
 
 # add tween schmovement
-func queue_remove():
-	var delete_q = queues.pop_front();
-	delete_q.queue_free()
-	for i in range(queues.size()):
-		queues[i].index = i;
-		queues[i].adjust_index(i)
+func queue_remove(index):
+#	var delete_q = queues.pop_front();
+	var delete_q = queues[index]
+	queues.erase(delete_q)
+	delete_q.call_deferred("free")
+	adjust_queues()
+	_on_global_timer_timeout()
 
 func _on_global_timer_timeout():
 	if (!game_start):
@@ -177,14 +185,32 @@ func _on_global_timer_timeout():
 		$HUD/RetryButton.show();
 		$HUD/GOLabel.show();
 
-func _stop_crafting(body):
-	if !currently_crafting:
-		return
-	print("Stop da craft")
-	var present = Present.instance()
-	add_child(present)
-	var collide_position = slots[crafting_slots[0]].position 
-	present.position = collide_position
-	present.travel(currently_crafting);
-#	present.get_node("Tween").interpolate_property(present, "position", collide_position, )
-	pass
+#func _stop_crafting(body):
+#	if !currently_crafting:
+#		return
+#	print("Stop da craft")
+#
+##	present.get_node("Tween").interpolate_property(present, "position", collide_position, )
+#	pass
+
+
+func _on_CraftingTimer_timeout():
+	# just accept sparkly
+	
+	
+#	var present = Present.instance()
+#	add_child(present)
+#	var collide_position = slots[crafting_slots[0]].global_position 
+##
+#	present.position = collide_position
+#	present.travel(currently_crafting);
+	
+	for s in crafting_slots:
+		slots[s]._return()
+	
+	crafting_slots = []
+	queues.erase(currently_crafting);
+	adjust_queues()
+	currently_crafting.queue_free()
+	currently_crafting = null
+	pass # Replace with function body.
