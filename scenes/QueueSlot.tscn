@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/queue.png" type="Texture" id=1]
+[ext_resource path="res://assets/queue3.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Plus.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/QueueSlot.gd" type="Script" id=3]
 
@@ -45,6 +45,16 @@ collision_mask = 192
 script = ExtResource( 3 )
 
 [node name="Container" type="Node2D" parent="."]
+
+[node name="BG" type="ColorRect" parent="Container"]
+modulate = Color( 1, 1, 1, 0.623529 )
+margin_left = -105.0
+margin_top = -29.2806
+margin_right = 109.0
+margin_bottom = 34.7194
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="QueueSlotSprite" type="Sprite" parent="Container"]
 scale = Vector2( 1.694, 2.035 )

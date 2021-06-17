@@ -104,6 +104,9 @@ linear_accel = 50.0
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
+DANGLE_GRAVITY = 11356
+DAMPENING = 6
+MOUSE_SPEED = 0.089
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hole_rotate"

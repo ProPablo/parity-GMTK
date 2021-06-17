@@ -42,8 +42,9 @@ func _ready():
 	height = sprite.get_rect().size.y * sprite.scale.y 
 	$QueueSlotAnimation.playback_speed = 1 / expire_time;
 	parent_size = get_parent().get_rect().size
-	
-	color = Color(randf(), randf(), randf(), 1)
+	var rand_color = Color(randf(), randf(), randf(), 1)
+	color = rand_color
+	$Container/BG.color = rand_color
 	sprite.self_modulate = color
 	
 	var item1 = pick_item();
@@ -60,12 +61,12 @@ func _start_expiring():
 	is_expiring = true;
 	$QueueSlotAnimation.play("Expiring");
 	
-func _on_slot_expire():
-	
+func _on_queue_expire():
 	print("Q dun")
 	items = null
 	index = 0;
 	sprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
+	$Container/ColorRect.color = Color(1.0, 1.0, 1.0, 1.0)
 	fire_at_heart = true
 	emit_signal("queue_expire", index)
 
@@ -76,7 +77,6 @@ func adjust_index(index):
 	modulate.a = fade
 	
 func pick_item() -> KinematicBody2D:
-
 	var item = Item.instance();
 	# Very Important to add child to the tree with add_child otherwise it cant access root 
 	$Container.add_child(item)

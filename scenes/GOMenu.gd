@@ -1,0 +1,22 @@
+extends CanvasLayer
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+func show():
+	$RetryButton.show();
+	$GOLabel.show();
+
+func hide():
+	$RetryButton.hide();
+	$GOLabel.hide();
+
+func _on_RetryButton_pressed():
+	$GOLabel.hide();
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	get_tree().reload_current_scene()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass

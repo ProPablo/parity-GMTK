@@ -1,5 +1,4 @@
 extends Node
-var is_shown_start = false;
 var asset_dict = {};
 # var inventory_slots = [];
 
@@ -20,6 +19,18 @@ func _ready():
 	# print(asset_dict)
 	pass # Replace with function body.
 
+func next_act():
+	var current_act_split = current_act.split("_")
+	var act = int(current_act_split[1]) 
+
+	
+	var num_acts = asset_dict.keys()
+	if (act == num_acts.size()):
+		get_tree().change_scene("res://scenes/EndMenu.tscn")
+		return
+	current_act = current_act_split[0] + "_" + str(int(act + 1))
+	get_tree().reload_current_scene()
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 # func _process(delta):

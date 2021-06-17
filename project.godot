@@ -16,12 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="parity_GMTK"
-run/main_scene="res://scenes/Main.tscn"
+run/main_scene="res://scenes/StartMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://Global.gd"
+Music="*res://scenes/Music.tscn"
 
 [display]
 

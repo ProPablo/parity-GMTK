@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/play.png" type="Texture" id=1]
+[ext_resource path="res://assets/clover-sans.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scenes/StartMenu.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[node name="StartMenu" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="TitleLabel" type="Label" parent="."]
+anchor_top = 0.437
+anchor_right = 1.0
+anchor_bottom = 0.506
+margin_top = 0.511993
+margin_right = -288.0
+margin_bottom = -35.144
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "PARITY"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -48.0
+margin_top = 28.0
+margin_right = 48.0
+margin_bottom = 108.0
+rect_pivot_offset = Vector2( 48, 40 )
+custom_fonts/font = SubResource( 2 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartSprite" type="Sprite" parent="StartButton"]
+position = Vector2( 48, 40 )
+scale = Vector2( 3.25, 3.25 )
+texture = ExtResource( 1 )
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]

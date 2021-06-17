@@ -152,12 +152,13 @@
 			"collision": "res://assets/act_1/act1_flower_collision.tres",
 			"region": [
 				0,
-				200,
-				144,
+				72,
+				384,
 				24
 			],
 			"scale": [2, 2],
-			"hf": 10, 
+			"vf": 1,
+			"hf": 24,
 			"anim": 1
 		},
 		"Outside_tree": {

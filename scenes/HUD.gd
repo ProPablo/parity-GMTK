@@ -1,35 +1,27 @@
 extends CanvasLayer
-signal start_game;
-
+onready var global = $"/root/Global"
 var life = preload("res://assets/life.png")
 var life_empty = preload("res://assets/life_empty.png")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$RetryButton.hide();
-	$GOLabel.hide();
+	$ActLabel.text = global.current_act
 	$ActLabel.hide();
+
+func show():
+	$PointLabel.show();
+	$ActLabel.show()
+	$LifeBar.show();
+	$InventoryHUD.show()
+	$QueueHUD.show();
+
 
 func hide():
 	$PointLabel.hide();
-	$InventoryHUD.hide()
-	$QueueHUD/.hide();
-	$GOLabel.hide();
-	$StartButton.hide();
+	$ActLabel.hide()
 	$LifeBar.hide();
-	$StartButton.show();
-	
-func show():
-	$PointLabel.show();
-	$InventoryHUD.show()
-	$QueueHUD.show();
-	$GOLabel.show();
-	$StartButton.show();
-	$LifeBar.show();
-	$StartButton.hide();
-	
-func _on_StartButton_pressed():
-	emit_signal("start_game");
+	$InventoryHUD.hide()
+	$QueueHUD.hide();
 
 func _process(delta):
 	pass;
@@ -43,8 +35,3 @@ func display_heart():
 			life_bar.get_child(i).texture = life
 		else:
 			life_bar.get_child(i).texture = life_empty
-
-func _on_RetryButton_pressed():
-	$GOLabel.hide();
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	get_tree().reload_current_scene()

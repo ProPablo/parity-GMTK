@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://sounds/game_over.wav" type="AudioStream" id=1]
+[ext_resource path="res://sounds/life_down.wav" type="AudioStream" id=2]
+[ext_resource path="res://sounds/pickup.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/music.wav" type="AudioStream" id=4]
+
+[node name="Music" type="Node"]
+
+[node name="ItemPickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="GameOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[node name="LifeDown" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true

@@ -1,25 +1,19 @@
 extends Node2D
 export (PackedScene) var Item;
 const Slot = preload("res://scenes/Slot.tscn")
+const SlotClass = preload("res://scenes/Slot.gd")
 const QueueSlot = preload("res://scenes/QueueSlot.tscn")
 const Present = preload("res://scenes/Present.tscn")
 onready var global = $"/root/Global"
-#Stays constant thanks to settings
-var global_timer = 0;
-var is_shown_start;
-var QUEUE_MAX_TIME = 2;
-var life_count = 3;
-var points = 0;
-var next_act = false
 
 export var queue_slots = 6;
 export var total_slots = 5;
 export var slots_margin = 0.3;
-var game_over = false;
-var game_start = false;
-var QUEUE_SCALE = 0;
-var QUEUE_MAX = 1;
 
+
+var points = 0;
+var game_over = false;
+var life_count = 3;
 var crafting_slots = [];
 var currently_crafting;
 var queues = []
@@ -30,33 +24,30 @@ var present = null
 var time_to_craft = 3.0
 
 # inevntory items stored in queue
-var inventory = []
+# var inventory = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Music.play();
-	print("res://assets/" + str(global.current_act).to_lower() + "planet")
-	$PlanetSprite.texture = load("res://assets/" + str(global.current_act).to_lower() + "planet.png")
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	is_shown_start = global.is_shown_start
-	global_timer = QUEUE_MAX_TIME;
-	$HUD.hide();
-	$ItemTimer.start();
-	$QueueTimer.start();
+	$HUD.hide()
+	$GOMenu.hide()
+	$ItemTimer.start()
+	$QueueTimer.start()
+	$HUD/PointLabel.text = "Points: " + str(points)
 	$Player.connect("item_collected", self, "_on_Item_pickup")
 	$HUD.connect("game_over", self, "_on_gameover")
-	$HUD.connect("start_game", self, "_on_gamestart")
-	$HUD/PointLabel.text = "Points: " + str(points)
-	# slots.append($HUD/InventoryHUD/InventorySlot1)
+	_on_gamestart()
+	$PlanetSprite.texture = load("res://assets/" + str(global.current_act).to_lower() + "planet.png")
+	get_node("/root/Music/Music").play();
 	create_inventory()
-#	_on_gamestart()
-	pass # Replace with function body.
+	$CraftingTimer.wait_time = time_to_craft
+
 
 func create_inventory():
 	var hud_size = $HUD/InventoryHUD.get_rect().size
 	# if div_x - slot_size - margin/2 is negative, adjust the scale of slot to adjust for that minimum margin  
 	var div_margin = hud_size.x * slots_margin; 
-	var div_x = (hud_size.x - div_margin) /total_slots;
+	var div_x = (hud_size.x - div_margin) /total_slots
 	
 	for i in range(total_slots):
 #		inventory.append(null);
@@ -70,13 +61,11 @@ func create_inventory():
 		slots.append(slot);
 
 func _on_Item_pickup(item):
-	if (game_over || !game_start):
+	if (game_over):
 		return;
-	
-
 	$ShakeCamera2D.add_trauma(0.1);
 	var is_full = true;
-	$ItemPickup.play();
+	get_node("/root/Music/ItemPickup").play();
 	for i in range(total_slots):
 		if !slots[i].item:
 			slots[i].insert_item(item)
@@ -84,17 +73,8 @@ func _on_Item_pickup(item):
 			is_full = false
 			break
 	if is_full:
-		print("Inventory full taking damage")
 		item.queue_free()
-
-#	inventory.append(item) 
-
-func next_act():
-	var current_act_split = global.current_act.split("_")
-	var new_act = int(current_act_split[1]) + 1
-	global.current_act = current_act_split[0] + "_" + str(new_act)
-	$PlanetSprite.texture = load("res://assets/" + str(global.current_act).to_lower() + "planet.png")
-	$HUD/ActLabel.text = global.current_act
+		life_down()
 
 func _on_gameover():
 	game_over = true
@@ -102,31 +82,19 @@ func _on_gameover():
 	$HUD/QueueHUD.hide();
 	$ItemTimer.stop();
 	$QueueTimer.stop();
-	$Music.stop();
-	$GameOver.play();
+	get_node("/root/Music/Music").stop();
+	get_node("/root/Music/GameOver").play();
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_gamestart():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	get_tree().call_group("items", "queue_free");
-	game_start = true
-	$HUD/PointLabel.show();
-	$HUD/InventoryHUD.show()
-	$HUD/QueueHUD.show();
-	$HUD/GOLabel.hide();
-	$HUD/TitleLabel.hide();
-	$HUD/LifeBar.show();
-	$HUD/StartButton.hide();
-	$HUD/ActLabel.show();
+	$HUD.show();
+	$GOMenu.hide();
 	$HUD/ActLabel.text = global.current_act.to_upper();
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-#	if (global_timer <= 0 && life_count > 0): 
-#		global_timer = QUEUE_MAX_TIME;
-##		_on_global_timer_timeout()
-#	global_timer -= delta;
 	if currently_crafting == null:
 		check_crafting()
 	
@@ -141,7 +109,7 @@ func check_crafting():
 		for q_item in q.items:
 #		Instead use inventory buffer queue (sorted slots in orer of oldest filled)
 			for slot in slots:
-				if slot.item ==null || slot.state != 2:
+				if slot.item == null || slot.state != 2:
 					continue
 				if (slot.item._name == q_item._name && !selected_q.has(slot.index)):
 					selected_q.append(slot.index);
@@ -169,8 +137,6 @@ func _on_ItemTimer_timeout():
 	item._loadJSON(current_item_data, current_item_name, Vector2(rand_range(0, .5), rand_range(50, 300)));
 
 func _on_QueueTimer_timeout():
-	if (!game_start):
-		return;
 	var size_of_list = queues.size()
 	var queue_instance = QueueSlot.instance()
 	$HUD/QueueHUD.add_child(queue_instance)
@@ -178,7 +144,6 @@ func _on_QueueTimer_timeout():
 	adjust_queues()
 	queue_instance.connect("queue_expire", self, "queue_remove")
 	queues.append(queue_instance)
-	
 	pass # Replace with function body.
 
 func adjust_queues():
@@ -192,40 +157,26 @@ func queue_remove(index):
 	queues.erase(delete_q)
 	delete_q.call_deferred("free")
 	adjust_queues()
-	_on_global_timer_timeout()
+	life_down()
 
-func _on_global_timer_timeout():
-	if (!game_start):
-		return;
+func life_down():
 	$ShakeCamera2D.add_trauma(0.4)
 	life_count -= 1;
 	$HUD.display_heart()
-	$LifeDown.play();
+	get_node("/root/Music/LifeDown").play();
 	if (life_count <= 0): 
 		_on_gameover();
-		$HUD/RetryButton.show();
-		$HUD/GOLabel.show();
-
-#func _stop_crafting(body):
-#	if !currently_crafting:
-#		return
-#	print("Stop da craft")
-#
-##	present.get_node("Tween").interpolate_property(present, "position", collide_position, )
-#	pass
+		$GOMenu.show()
 
 
 func _on_CraftingTimer_timeout():
 	# just accept sparkly
 	points += 1;
 	$HUD/PointLabel.text = "Points: " + str(points)
-	if (points >= 5 && !next_act):
-		next_act()
-		next_act = true;
-	if (points >= 10 ):
+	if (points >= 1):
+		global.next_act()
+	if (points >= 2 ):
 		_on_gameover();
-		$HUD/GOLabel.text = "Thank you for playing."	
-		$HUD/GOLabel.show();			
 	
 #	var present = Present.instance()
 #	add_child(present)

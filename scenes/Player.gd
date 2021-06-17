@@ -6,7 +6,11 @@ var game_over
 
 onready var p_div = $PlayerContainer;
 var angular_velocity = 0
-export var GRAVITY = 98
+export var DANGLE_GRAVITY = 98
+export var DAMPENING = 2
+export var STARTING_ANGLE = -PI/2
+export var MOUSE_SPEED = 0.01
+export var BODY_LENGTH = 64
 
 
 #var G = 6.6743e-1
@@ -20,44 +24,32 @@ func _ready():
 	pass # Replace with function body.
 
 
+func _input(event):
+	if (event is InputEventMouseMotion && !get_parent().game_over ):
+		var mouse_pos = get_global_mouse_position();
+		position = Vector2(clamp(mouse_pos.x, 1, 566), mouse_pos.y);
+		
+		var rot = p_div.rotation + PI/2;
+		var mouse_vel_x = Input.get_last_mouse_speed().x
+		angular_velocity += (mouse_vel_x * MOUSE_SPEED *cos(rot))  / BODY_LENGTH
+		
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+
+func _physics_process(delta):
 	for body in influenced:
 		var vec_towards = (position - body.position).normalized()
 		var distance_squared = position.distance_squared_to(body.position);
 		var accel = ((G*MASS) / distance_squared);
 #	print(accel)
 		body.velocity += vec_towards * accel * delta;
-	
-#	rotation = pi/2 to -pi/2
 
-func _input(event):
-	if (event is InputEventMouseMotion && !get_parent().game_over ):
-		var mouse_pos = get_global_mouse_position();
-		position = Vector2(clamp(mouse_pos.x, 1, 566), mouse_pos.y);
-		
-		# print(Input.get_last_mouse_speed())
-			
-	#	# removing negative with one value
-	#	var normalized_jump = velocity.y + jump_velocity;
-	#	# ensuring that normalized_jump is value you want between -ve to +ve (A,B)
-	#	var t = (clamp(normalized_jump, 0, 2 * jump_velocity)) / (2 * jump_velocity);
-	#	$FlappyBird.rotation = deg2rad(-60) * (1 - t) + deg2rad(60) * t;
-		
-#		if (event.relative.x > 0):
-#			$DanglingAnimation.assigned_animation = "Dangling_right"
-#		if (event.relative.x < 0):
-#			$DanglingAnimation.assigned_animation = "Dangling_left"
+	var rot = p_div.rotation + PI/2;
+	var directional_vec = Vector2(cos(rot), sin(rot))
 
-func _physics_process(delta):
-#	var rot = p_div.rotation;
-##	var directional_vec = Vector2(cos(rot), sin(rot))
-##	print(directional_vec)
-#	var r = 64;
-#	angular_velocity += (GRAVITY * delta *sin(rot))  / r
-#	p_div.rotation += angular_velocity * delta;
-	pass
+	angular_velocity += (DANGLE_GRAVITY * delta *sin(rot))  / BODY_LENGTH
+	angular_velocity += -sign(angular_velocity) * DAMPENING * delta
+	p_div.rotation += angular_velocity * delta
+
 
 func _on_Influence_body_entered(body):
 	if body.is_slotted:

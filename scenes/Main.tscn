@@ -1,16 +1,13 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Item.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Main.gd" type="Script" id=3]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ShakeCamera2D.gd" type="Script" id=5]
-[ext_resource path="res://sounds/pickup.wav" type="AudioStream" id=6]
-[ext_resource path="res://sounds/game_over.wav" type="AudioStream" id=7]
+[ext_resource path="res://scenes/GOMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/background act1.png" type="Texture" id=8]
-[ext_resource path="res://sounds/life_down.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/act_1planet.png" type="Texture" id=10]
-[ext_resource path="res://sounds/music.wav" type="AudioStream" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Planet"
@@ -38,42 +35,6 @@ position = Vector2( 288, 512 )
 texture = ExtResource( 8 )
 region_rect = Rect2( 0, 0, 2293, 892 )
 
-[node name="HUD" parent="." instance=ExtResource( 4 )]
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 254, 170.373 )
-z_index = 1
-MASS = 3423
-G = 3558
-
-[node name="ItemTimer" type="Timer" parent="."]
-wait_time = 0.25
-
-[node name="ItemPosition" type="Position2D" parent="."]
-position = Vector2( 288, 0 )
-
-[node name="ShakeCamera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-rotating = true
-current = true
-script = ExtResource( 5 )
-
-[node name="QueueTimer" type="Timer" parent="."]
-wait_time = 5.0
-
-[node name="ItemPickup" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
-
-[node name="GameOver" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
-
-[node name="LifeDown" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
-autoplay = true
-
 [node name="PlanetSprite" type="Sprite" parent="."]
 position = Vector2( 288, -152 )
 scale = Vector2( 6.33, 6.33 )
@@ -85,14 +46,33 @@ frame = 24
 autoplay = "Planet"
 anims/Planet = SubResource( 1 )
 
-[node name="outside_stuff_tileset" type="Sprite" parent="."]
-position = Vector2( 472, 656 )
-hframes = 10
-region_enabled = true
-region_rect = Rect2( 0, 200, 144, 24 )
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="ShakeCamera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+rotating = true
+current = true
+script = ExtResource( 5 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 254, 170.373 )
+z_index = 1
+MASS = 3423
+G = 3558
+
+[node name="ItemPosition" type="Position2D" parent="."]
+position = Vector2( 288, 0 )
+
+[node name="ItemTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="QueueTimer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="CraftingTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="GOMenu" parent="." instance=ExtResource( 7 )]
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
 [connection signal="timeout" from="QueueTimer" to="." method="_on_QueueTimer_timeout"]
 [connection signal="timeout" from="CraftingTimer" to="." method="_on_CraftingTimer_timeout"]

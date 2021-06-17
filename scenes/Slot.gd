@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Slot
+
 onready var global = $"/root/Global"
 
 enum {
