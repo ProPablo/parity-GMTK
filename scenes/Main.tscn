@@ -29,7 +29,6 @@ tracks/0/keys = {
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
 Item = ExtResource( 1 )
-slots_margin = 0.3
 
 [node name="BackgroundSprite" type="Sprite" parent="."]
 position = Vector2( 288, 512 )
@@ -74,6 +73,7 @@ wait_time = 5.0
 one_shot = true
 
 [node name="GOMenu" parent="." instance=ExtResource( 7 )]
+
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
 [connection signal="timeout" from="QueueTimer" to="." method="_on_QueueTimer_timeout"]
 [connection signal="timeout" from="CraftingTimer" to="." method="_on_CraftingTimer_timeout"]

@@ -4,17 +4,20 @@ const SlotPrefab = preload("res://scenes/Slot.tscn")
 const Slot = preload("res://scenes/Slot.gd")
 const QueueSlot = preload("res://scenes/QueueSlot.tscn")
 const Present = preload("res://scenes/Present.tscn")
+const Heart = preload("res://scenes/Heart.tscn")
 onready var global = $"/root/Global"
+
 
 export var queue_slots = 6;
 export var total_slots = 5;
 export var slots_margin = 0.3;
 export var max_points = 3;
+export var max_life = 4;
 
 
+var life_count = 4;
 var points = 0;
 var game_over = false;
-var life_count = 3;
 var crafting_slots = [];
 var currently_crafting;
 var queues = []
@@ -37,6 +40,7 @@ func _ready():
 	$PlanetSprite.texture = load("res://assets/" + str(global.current_act).to_lower() + "planet.png")
 	get_node("/root/Music/Music").play();
 	create_inventory()
+	create_hearts()
 	$CraftingTimer.wait_time = time_to_craft
 	_on_QueueTimer_timeout()
 
@@ -57,6 +61,12 @@ func create_inventory():
 		slot.position = Vector2(0.5 * div_margin + i* div_x + 0.5*div_x, hud_size.y/2 )
 		slot.connect("area_entered", self, "_stop_crafting")
 		slots.append(slot);
+		
+func create_hearts():
+	for i in range(max_life):
+		var heart = Heart.instance()
+		$HUD/LifeBar.add_child(heart)
+	pass
 
 func _on_Item_pickup(item):
 	if (game_over):
@@ -105,7 +115,6 @@ func check_crafting():
 		var selected_q = []
 
 		for q_item in q.items:
-#		Instead use inventory buffer queue (sorted slots in orer of oldest filled)
 			for slot in slots:
 				if slot.state != Slot.EXPIRING:
 					continue
@@ -171,25 +180,17 @@ func _on_CraftingTimer_timeout():
 	points += 1;
 	$HUD/PointLabel.text = "Points: " + str(points)
 	if (points >= max_points):
-		global.next_act()
-	
+		global.next_act()	
 #	var present = Present.instance()
 #	add_child(present)
 #	var collide_position = slots[crafting_slots[0]].global_position 
 ##
 #	present.position = collide_position
 #	present.travel(currently_crafting);
-	
 	for s in crafting_slots:
 		s._return()
-	
 	crafting_slots = []
 	queues.erase(currently_crafting);
 	adjust_queues()
 	currently_crafting.queue_free()
 	currently_crafting = null
-	
-	
-#	when item success crafted -> next act
-#	if (points == 10):
-#		next_act()
