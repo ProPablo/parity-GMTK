@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Slot",
+"language": "GDScript",
+"path": "res://scenes/Slot.gd"
+} ]
 _global_script_class_icons={
-
+"Slot": ""
 }
 
 [application]

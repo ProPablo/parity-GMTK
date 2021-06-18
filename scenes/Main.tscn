@@ -73,6 +73,7 @@ wait_time = 5.0
 one_shot = true
 
 [node name="GOMenu" parent="." instance=ExtResource( 7 )]
+
 [connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
 [connection signal="timeout" from="QueueTimer" to="." method="_on_QueueTimer_timeout"]
 [connection signal="timeout" from="CraftingTimer" to="." method="_on_CraftingTimer_timeout"]

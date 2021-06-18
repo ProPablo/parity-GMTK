@@ -51,4 +51,5 @@ __meta__ = {
 position = Vector2( 48, 40 )
 scale = Vector2( 3.25, 3.25 )
 texture = ExtResource( 1 )
+
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]

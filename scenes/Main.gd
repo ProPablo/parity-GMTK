@@ -1,7 +1,7 @@
 extends Node2D
 export (PackedScene) var Item;
-const Slot = preload("res://scenes/Slot.tscn")
-const SlotClass = preload("res://scenes/Slot.gd")
+const SlotPrefab = preload("res://scenes/Slot.tscn")
+const Slot = preload("res://scenes/Slot.gd")
 const QueueSlot = preload("res://scenes/QueueSlot.tscn")
 const Present = preload("res://scenes/Present.tscn")
 onready var global = $"/root/Global"
@@ -9,6 +9,7 @@ onready var global = $"/root/Global"
 export var queue_slots = 6;
 export var total_slots = 5;
 export var slots_margin = 0.3;
+export var max_points = 3;
 
 
 var points = 0;
@@ -23,10 +24,6 @@ var present = null
 
 var time_to_craft = 3.0
 
-# inevntory items stored in queue
-# var inventory = []
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$HUD.hide()
@@ -41,6 +38,7 @@ func _ready():
 	get_node("/root/Music/Music").play();
 	create_inventory()
 	$CraftingTimer.wait_time = time_to_craft
+	_on_QueueTimer_timeout()
 
 
 func create_inventory():
@@ -51,7 +49,7 @@ func create_inventory():
 	
 	for i in range(total_slots):
 #		inventory.append(null);
-		var slot = Slot.instance();
+		var slot = SlotPrefab.instance();
 		$HUD/InventoryHUD.add_child(slot)
 		slot.name = "InventorySlot%d" % i
 		slot.index = i
@@ -66,8 +64,8 @@ func _on_Item_pickup(item):
 	$ShakeCamera2D.add_trauma(0.1);
 	var is_full = true;
 	get_node("/root/Music/ItemPickup").play();
-	for i in range(total_slots):
-		if !slots[i].item:
+	for i in range(slots.size()):
+		if slots[i].state == Slot.IDLE:
 			slots[i].insert_item(item)
 			item.item_to_inventory(i)
 			is_full = false
@@ -109,10 +107,11 @@ func check_crafting():
 		for q_item in q.items:
 #		Instead use inventory buffer queue (sorted slots in orer of oldest filled)
 			for slot in slots:
-				if slot.item == null || slot.state != 2:
+				if slot.state != Slot.EXPIRING:
 					continue
-				if (slot.item._name == q_item._name && !selected_q.has(slot.index)):
-					selected_q.append(slot.index);
+				
+				if (slot.item._name == q_item._name && !selected_q.has(slot)):
+					selected_q.append(slot);
 					break
 		
 		if (selected_q.size() >= q.items.size()):
@@ -120,8 +119,9 @@ func check_crafting():
 			currently_crafting = q
 			currently_crafting.enable_crafting()
 			for s in crafting_slots:
-				slots[s]._start_crafting(q)
+				s._start_crafting(q)
 			$CraftingTimer.start()
+			break
 	
 func _on_ItemTimer_timeout(): 
 	var item = Item.instance();
@@ -131,7 +131,6 @@ func _on_ItemTimer_timeout():
 	var dict_keys = global.asset_dict[global.current_act].keys()
 	var rand_index = randi() % dict_keys.size()
 #	var rand_index = randi() % 2
-#	print(rand_index)
 	var current_item_name = dict_keys[rand_index]
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
 	item._loadJSON(current_item_data, current_item_name, Vector2(rand_range(0, .5), rand_range(50, 300)));
@@ -151,13 +150,11 @@ func adjust_queues():
 		queues[i].adjust_index(i)
 
 # add tween schmovement
-func queue_remove(index):
-#	var delete_q = queues.pop_front();
-	var delete_q = queues[index]
-	queues.erase(delete_q)
-	delete_q.call_deferred("free")
+func queue_remove(queue):
+	queues.erase(queue)
 	adjust_queues()
 	life_down()
+	queue.call_deferred("free")
 
 func life_down():
 	$ShakeCamera2D.add_trauma(0.4)
@@ -173,10 +170,8 @@ func _on_CraftingTimer_timeout():
 	# just accept sparkly
 	points += 1;
 	$HUD/PointLabel.text = "Points: " + str(points)
-	if (points >= 1):
+	if (points >= max_points):
 		global.next_act()
-	if (points >= 2 ):
-		_on_gameover();
 	
 #	var present = Present.instance()
 #	add_child(present)
@@ -186,7 +181,7 @@ func _on_CraftingTimer_timeout():
 #	present.travel(currently_crafting);
 	
 	for s in crafting_slots:
-		slots[s]._return()
+		s._return()
 	
 	crafting_slots = []
 	queues.erase(currently_crafting);

@@ -48,11 +48,9 @@ func _loadJSON(current_data, input_name, input_velocity = Vector2(0,0)):
 		var counter = 0;
 		for frame in animation_frames:
 			if frame in exclude:
-#				print("skipping" + str(frame))
 				continue
 			anim.track_insert_key(track_index, frame_length*counter, frame);
 			counter+=1
-#			print(frame)
 	
 		#Fix to wierdness
 		anim.value_track_set_update_mode(0, Animation.UPDATE_DISCRETE)
@@ -89,7 +87,6 @@ func item_to_queue(new_item, input_name, y_size):
 
 
 func item_to_inventory(slot_number):
-#	print("Going to slot" + str(slot_number))
 	if is_slotted:
 		return
 	

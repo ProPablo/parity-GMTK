@@ -61,3 +61,5 @@ texture = ExtResource( 1 )
 autoplay = "Idle"
 anims/Expiring = SubResource( 1 )
 anims/Idle = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]

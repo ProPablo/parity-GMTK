@@ -1,50 +1,52 @@
 extends Node2D
-
-signal queue_expire(index);
-
-var is_expiring = false;
-var shake_scalar = 16.0
+signal queue_expire(queue);
 
 var ITEM_MAX_RANGE = 2 # max items in recipe 
-var items = []
 onready var global = $"/root/Global"
 const Item = preload("res://scenes/Item.tscn")
 const Plus = preload("res://scenes/Plus.tscn")
+
 export var space_between = 0.05;
 export var expire_time = 12.0
 export var fade_scale = 0.16
+export var shake_scalar = 16.0
+export var fire_heart_speed = 10
 
 var heart_location = Vector2(0,0);
 
+var items = []
 var space 
 var height 
 var parent_size
 var index;
 var color = Color.white;
-var fire_at_heart = false
 var t = 0.0
-var fire_heart_speed = 10
 
 enum {
-	MOVING,
+	EXPIRING,
 	FIRE_AT_HEART,
 	CRAFTING,
 	FINISHED
 }
-var state = MOVING
+var state = EXPIRING
 
 var rng
-onready var sprite = $Container/QueueSlotSprite
+onready var sprite = $Container/Vibrate/QueueSlotSprite
+onready var vibrate = $Container/Vibrate
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	space = sprite.get_rect().size.x * sprite.scale.x
 	height = sprite.get_rect().size.y * sprite.scale.y 
-	$QueueSlotAnimation.playback_speed = 1 / expire_time;
+	
+	var anim = $Animation.get_animation("Expiring")
+	var anim_distance = global.screen_size.x - space
+	print(anim_distance)
+	anim.track_set_key_value(1, 1, anim_distance)
+	
+	$Animation.playback_speed = 1 / expire_time;
 	parent_size = get_parent().get_rect().size
-	var rand_color = Color(randf(), randf(), randf(), 1)
-	color = rand_color
-	$Container/BG.color = rand_color
+	color = Color(randf(), randf(), randf(), 1)
+	sprite.get_node("BG").color = color
 	sprite.self_modulate = color
 	
 	var item1 = pick_item();
@@ -55,20 +57,17 @@ func _ready():
 	_start_expiring()
 	
 func enable_crafting():
-	$QueueSlotAnimation.stop()
+	$Animation.stop()
 	
 func _start_expiring():
-	is_expiring = true;
-	$QueueSlotAnimation.play("Expiring");
+	
+	$Animation.play("Expiring");
 	
 func _on_queue_expire():
-	print("Q dun")
 	items = null
-	index = 0;
-	sprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
-	$Container/ColorRect.color = Color(1.0, 1.0, 1.0, 1.0)
-	fire_at_heart = true
-	emit_signal("queue_expire", index)
+#	sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+#	$Container/BG.color = Color(1.0, 1.0, 1.0, 1.0)
+	emit_signal("queue_expire", self)
 
 func adjust_index(index):
 	var offset =  height * index + height/2 + space_between * height
@@ -79,11 +78,9 @@ func adjust_index(index):
 func pick_item() -> KinematicBody2D:
 	var item = Item.instance();
 	# Very Important to add child to the tree with add_child otherwise it cant access root 
-	$Container.add_child(item)
-#	sprite.add_child(item);
-#	print("parent" + str(item.get_parent().name))
+#	$Container.add_child(item)
+	vibrate.add_child(item)
 	var dict_keys = global.asset_dict[global.current_act].keys()
-	# var rand_index = rng.randi_range(0, dict_keys.size() - 1)
 	var rand_index = randi() % dict_keys.size()
 #	var rand_index = randi() % 2
 	var current_item_name = dict_keys[rand_index]
@@ -101,12 +98,12 @@ func _process(delta):
 	match state:
 		CRAFTING:
 			pass
-		MOVING:
-			sprite.position.y = $QueueSlotAnimation.current_animation_position * shake_scalar * randf();
-			sprite.position.x = $QueueSlotAnimation.current_animation_position * shake_scalar * randf(); 
+		EXPIRING:
+			vibrate.position.y = $Animation.current_animation_position * shake_scalar * randf();
+			vibrate.position.x = $Animation.current_animation_position * shake_scalar * randf(); 
 		FIRE_AT_HEART:
 			var vect = (global_position - heart_location).normalized();
-			global_position += vect * fire_heart_speed * delta;	
+			global_position += vect * fire_heart_speed * delta;
 
 
 func _on_QueueSlot_area_entered(area):
