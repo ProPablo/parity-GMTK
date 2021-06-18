@@ -2,7 +2,7 @@ extends Node
 var asset_dict = {};
 # var inventory_slots = [];
 
-var current_act = "Act_3"
+var current_act = "Act_1"
 var screen_size;
 
 # Called when the node enters the scene tree for the first time.

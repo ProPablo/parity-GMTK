@@ -219,7 +219,7 @@
 			"scale": [4, 4]
 		},
 		"Potion": {
-			"text": "res://assets/act_3/.png",
+			"text": "res://assets/act_3/Potion_18.png",
 			"collision": "res://assets/act_3/general_collision.tres",
 			"scale": [4, 4]
 		},
