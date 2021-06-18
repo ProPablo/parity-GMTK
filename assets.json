@@ -2,7 +2,7 @@
 	"Act_1": {
 		"Student_bike": {
 			"text": "res://assets/act_1/student bike.png",
-			"collision": "res://assets/act_1/act1_student_bike_collision.tres",	
+			"collision": "res://assets/act_1/student_bike_collision.tres",	
 			"scale": [2, 2],
 			"hf": 3,
 			"vf": 4, 
@@ -10,7 +10,7 @@
 		},
 		"Student_female_1": {
 			"text": "res://assets/act_1/student female1.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				0,
 				4,
@@ -24,7 +24,7 @@
 		},
 		"Inside_TV": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				3,
 				234,
@@ -35,7 +35,7 @@
 		},
 		"Student_male_1": {
 			"text": "res://assets/act_1/student male1.png",
-			"collision": "res://assets/act_1/act1_general_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				0,
 				4,
@@ -49,7 +49,7 @@
 		},
 		"Inside_cabinet": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				195,
 				952,
@@ -60,18 +60,18 @@
 		},
 		"Inside_globe": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				193,
 				1057,
 				13,
 				21
 			],
-			"scale": [2, 2]
+			"scale": [2.5, 2.5]
 		},
 		"Inside_painting": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				2,
 				1130,
@@ -82,7 +82,7 @@
 		},
 		"Inside_vase": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				1,
 				1068,
@@ -93,7 +93,7 @@
 		},
 		"Inside_mirror": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_1/general_collision.tres",
 			"region": [
 				134,
 				1064,
@@ -106,8 +106,8 @@
 	},
 	"Act_2": {
 		"Outside_rocks": {
-			"text": "res://assets/act_1/outside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"text": "res://assets/act_2/outside_stuff_tileset.png",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				18,
 				233,
@@ -117,7 +117,7 @@
 		},
 		"Inside_bookshelf": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				224,
 				1094,
@@ -128,7 +128,7 @@
 		},
 		"Inside_fireplace": {
 			"text": "res://assets/act_1/inside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				64,
 				1088,
@@ -138,8 +138,8 @@
 			"scale": [2, 2]
 		},
 		"Outside_flower": {
-			"text": "res://assets/act_1/outside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"text": "res://assets/act_2/outside_stuff_tileset.png",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				51,
 				5,
@@ -148,8 +148,8 @@
 			]
 		},
 		"Phone_male": {
-			"text": "res://assets/act_1/phone_male.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"text": "res://assets/act_2/phone_male.png",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				0,
 				72,
@@ -162,8 +162,8 @@
 			"anim": 1
 		},
 		"Outside_tree": {
-			"text": "res://assets/act_1/outside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"text": "res://assets/act_2/outside_stuff_tileset.png",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				678,
 				12,
@@ -172,8 +172,8 @@
 			]
 		},
 		"Outside_sign": {
-			"text": "res://assets/act_1/outside_stuff_tileset.png",
-			"collision": "res://assets/act_1/act1_flower_collision.tres",
+			"text": "res://assets/act_2/outside_stuff_tileset.png",
+			"collision": "res://assets/act_2/general_collision.tres",
 			"region": [
 				336,
 				194,
@@ -181,6 +181,58 @@
 				46
 			]
 		}
-		
+	},
+	"Act_3": {
+		"Rock_boss": {
+			"text": "res://assets/act_3/24_boss_x.png",
+			"collision": "res://assets/act_3/rockboss_collision.tres",
+			"scale": [2, 2]
+		},
+		"Chest_boss": {
+			"text": "res://assets/act_3/30_boss_x.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [2, 2]
+		},
+		"Slime_minion": {
+			"text": "res://assets/act_3/62_minion_2_x.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [3, 3]
+		},
+		"Skull_minion": {
+			"text": "res://assets/act_3/64_minion_1_x.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [3, 3]
+		},
+		"Diamonds": {
+			"text": "res://assets/act_3/Crafting_08.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [4, 4]
+		},
+		"Shield": {
+			"text": "res://assets/act_3/Shield_16.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [4, 4]
+		},
+		"Weapon": {
+			"text": "res://assets/act_3/Weapon_03.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [4, 4]
+		},
+		"Potion": {
+			"text": "res://assets/act_3/.png",
+			"collision": "res://assets/act_3/general_collision.tres",
+			"scale": [4, 4]
+		},
+		"Key": {
+			"text": "res://assets/act_3/RPG_Item_Pack_Retro_Spritesheet.png",
+			"collision": "res://assets/act_3/key_collision.tres",
+			"region": [
+				245,
+				338,
+				6,
+				12
+			],
+			"scale": [4, 4]
+		}
 	}
 }

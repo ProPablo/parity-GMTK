@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/outside_stuff_tileset.png-98f8049810df8a0a8f40c9f39b8f63c1.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/act_2/outside_stuff_tileset.png"
+dest_files=[ "res://.import/outside_stuff_tileset.png-98f8049810df8a0a8f40c9f39b8f63c1.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
