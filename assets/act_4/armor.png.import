@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/queue2.png-36e28e7cbb884e721c9efb66e782e2c3.stex"
+path="res://.import/armor.png-672976b362247cc0cc321797944d3fbf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/queue2.png"
-dest_files=[ "res://.import/queue2.png-36e28e7cbb884e721c9efb66e782e2c3.stex" ]
+source_file="res://assets/act_4/armor.png"
+dest_files=[ "res://.import/armor.png-672976b362247cc0cc321797944d3fbf.stex" ]
 
 [params]
 
