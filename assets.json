@@ -196,7 +196,7 @@
 		"Slime_minion": {
 			"text": "res://assets/act_3/62_minion_2_x.png",
 			"collision": "res://assets/act_3/general_collision.tres",
-			"scale": [3, 3]
+			"scale": [2.5, 2.5]
 		},
 		"Skull_minion": {
 			"text": "res://assets/act_3/64_minion_1_x.png",
@@ -233,6 +233,264 @@
 				12
 			],
 			"scale": [4, 4]
+		}
+	},
+	"Act_4": {
+		"Armor": {
+			"text": "res://assets/act_4/armor.png",
+			"collision": "res://assets/act_4/armor_collision.tres",
+			"scale": [2, 2]
+		},
+		"Gun": {
+			"text": "res://assets/act_4/gun.png",
+			"collision": "res://assets/act_4/gun_collision.tres",
+			"scale": [2, 2]
+		},
+		"Sword": {
+			"text": "res://assets/act_4/sword.png",
+			"collision": "res://assets/act_4/armor_collision.tres",
+			"scale": [3, 3]
+		},
+		"Cyber_rockboss": {
+			"text": "res://assets/act_4/cyber_rockboss.png",
+			"collision": "res://assets/act_3/rockboss_collision.tres",
+			"scale": [2, 2]
+		},
+		"Cyber_bike": {
+			"text": "res://assets/act_4/cyber_bike.png",
+			"collision": "res://assets/act_1/general_collision.tres",
+			"scale": [2.5, 2.5],
+			"hf": 3, 
+			"anim": 2
+		},
+		"Cyber_female": {
+			"text": "res://assets/act_4/cyber_female.png",
+			"collision": "res://assets/act_1/general_collision.tres",
+			"scale": [2.5, 2.5],
+			"hf": 3, 
+			"anim": 2
+		},
+		"Cyber_male": {
+			"text": "res://assets/act_4/cyber_male.png",
+			"collision": "res://assets/act_1/general_collision.tres",
+			"scale": [2.5, 2.5],
+			"hf": 3, 
+			"anim": 2
+		}
+	},
+	"Act_5": {
+		"Mech_1": {
+			"text": "res://assets/act_5/Mobs.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				4,
+				18,
+				82,
+				56
+			]
+		},
+		"Mech_4": {
+			"text": "res://assets/act_5/Mobs.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				15,
+				85,
+				60,
+				40
+			]
+		},
+		"Mech_5": {
+			"text": "res://assets/act_5/Mobs.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				150,
+				72,
+				68,
+				45
+			]
+		},
+		"Mech_7": {
+			"text": "res://assets/act_5/Mobs.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				10,
+				137,
+				84,
+				55
+			]
+		},
+		"Mech_8": {
+			"text": "res://assets/act_5/Mobs.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				97,
+				132,
+				49,
+				58
+			]
+		},
+		"Mech_9": {
+			"text": "res://assets/act_5/Mobs.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				156,
+				124,
+				58,
+				67
+			]
+		},
+		"Tech_moon": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/moon_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				96,
+				192,
+				32,
+				32
+			]
+		},
+		"Tech_moon2": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/moon2_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				128,
+				128,
+				64,
+				64
+			]
+		}
+	},
+	"Act_6": {
+		"Asteroid_1": {
+			"text": "res://assets/act_6/asteroid1.png",
+			"collision": "res://assets/act_6/general_collision.tres",
+			"scale": [2, 2]
+		},
+		"Asteroid_2": {
+			"text": "res://assets/act_6/asteroid2.png",
+			"collision": "res://assets/act_6/general_collision.tres",
+			"scale": [2, 2]
+		},
+		"Asteroid_3": {
+			"text": "res://assets/act_6/asteroid3.png",
+			"collision": "res://assets/act_6/general_collision.tres",
+			"scale": [2, 2]
+		},
+		"Asteroid_4": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				34,
+				226,
+				60,
+				30 
+			]
+		},
+		"Asteroid_5": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/general_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				137,
+				235,
+				13,
+				11 
+			]
+		},
+		"Red_asteroid": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/moon_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				128,
+				194,
+				30,
+				27  
+			]
+		},
+		"Yellow_asteroid": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/moon_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				192,
+				194,
+				31,
+				29  
+			]
+		},
+		"Red_moon": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/moon_collision.tres",
+			"scale": [2, 2],
+			"region": [
+				64,
+				192,
+				32,
+				32 
+			]
+		},
+		"Red_planet": {
+			"text": "res://assets/act_5/CelestialObjects.png",
+			"collision": "res://assets/act_5/moon2_collision.tres",
+			"scale": [1.5, 1.5],
+			"region": [
+				192,
+				128,
+				64,
+				64  
+			]
+		}
+	},
+	"Act_7": {
+		"Female_1": {
+			"text": "res://assets/act_7/FS1-angry2.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.15, 0.15]
+		},
+		"Female_2": {
+			"text": "res://assets/act_7/lookaway.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.15, 0.15]
+		},
+		"Male_1": {
+			"text": "res://assets/act_7/MS1-dread.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.2, 0.2]
+		},
+		"Male_2": {
+			"text": "res://assets/act_7/MS2-sad.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.2, 0.2]
+		},
+		"Male_3": {
+			"text": "res://assets/act_7/MS3-disbelief.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.2, 0.2]
+		},
+		"Male_4": {
+			"text": "res://assets/act_7/MS4-unhappy1.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.2, 0.2]
+		},
+		"Miki": {
+			"text": "res://assets/act_7/Miki_Summer_Uni_Frown_Blush.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.15, 0.15]
+		},
+		"Aiko": {
+			"text": "res://assets/act_7/Aiko_formal_frown.png",
+			"collision": "res://assets/act_7/general_collision.tres",
+			"scale": [0.15, 0.15]
 		}
 	}
 }
