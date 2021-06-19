@@ -31,7 +31,3 @@ func next_act():
 	current_act = current_act_split[0] + "_" + str(int(act + 1))
 	get_tree().reload_current_scene()
 	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-# func _process(delta):
-#	pass

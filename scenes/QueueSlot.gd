@@ -57,6 +57,7 @@ func _ready():
 	_start_expiring()
 	
 func enable_crafting():
+	state = CRAFTING
 	$Animation.stop()
 	
 func _start_expiring():

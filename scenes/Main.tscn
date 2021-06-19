@@ -55,7 +55,7 @@ current = true
 script = ExtResource( 5 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 254, 170.373 )
+position = Vector2( 323.836, 97.7889 )
 z_index = 1
 MASS = 3423
 G = 3558
