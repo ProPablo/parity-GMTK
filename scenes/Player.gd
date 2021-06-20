@@ -31,8 +31,9 @@ func _input(event):
 		
 		var rot = p_div.rotation + PI/2;
 		var mouse_vel_x = Input.get_last_mouse_speed().x
+		var mouse_vel_y = Input.get_last_mouse_speed().y
 		angular_velocity += (mouse_vel_x * MOUSE_SPEED *cos(rot))  / BODY_LENGTH
-		
+		angular_velocity += (mouse_vel_y * MOUSE_SPEED *sin(rot))  / BODY_LENGTH
 
 
 func _physics_process(delta):
