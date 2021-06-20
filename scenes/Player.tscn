@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.gd" type="Script" id=2]
@@ -9,15 +9,21 @@
 [ext_resource path="res://Player.shader" type="Shader" id=7]
 [ext_resource path="res://assets/pixel.png" type="Texture" id=8]
 
-[sub_resource type="ShaderMaterial" id=10]
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+noise = SubResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 7 )
 shader_param/MAX_UV_DISP = 0.1
 shader_param/LOWER_DIST = 0.001
 shader_param/UPPER_DIST = 0.5
 shader_param/sprite_scale = 211.469
 shader_param/rotation_scale = 0.2
+shader_param/noiseTex = SubResource( 2 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hole:frame")
@@ -32,7 +38,7 @@ tracks/0/keys = {
 "values": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 49 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 20.0
 loop = true
 tracks/0/type = "value"
@@ -60,13 +66,13 @@ tracks/1/keys = {
 "values": [ 360.0, 0.0 ]
 }
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 radius = 104.689
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=7]
 radius = 23.8924
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -82,7 +88,7 @@ tracks/0/keys = {
 "values": [ 4, 5 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.4
 loop = true
 step = 0.01
@@ -99,7 +105,7 @@ tracks/0/keys = {
 "values": [ 1, 2 ]
 }
 
-[sub_resource type="ParticlesMaterial" id=9]
+[sub_resource type="ParticlesMaterial" id=10]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -116,17 +122,17 @@ DAMPENING = 6
 MOUSE_SPEED = 0.157
 
 [node name="ShaderSprite" type="Sprite" parent="."]
-material = SubResource( 10 )
+material = SubResource( 3 )
 scale = Vector2( 211.469, 211.469 )
 texture = ExtResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hole_rotate"
-anims/Hole_rotate = SubResource( 3 )
+anims/Hole_rotate = SubResource( 4 )
 
 [node name="RotationAnimation" type="AnimationPlayer" parent="."]
 autoplay = "Rotate_Hole"
-anims/Rotate_Hole = SubResource( 4 )
+anims/Rotate_Hole = SubResource( 5 )
 
 [node name="icon" type="Sprite" parent="."]
 visible = false
@@ -140,7 +146,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Influence"]
 position = Vector2( 0.280594, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="CollisionSprite" type="Sprite" parent="Influence"]
 modulate = Color( 1, 1, 1, 0.266667 )
@@ -160,7 +166,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="PlayerContainer" type="Node2D" parent="."]
 position = Vector2( 0, 35 )
@@ -178,15 +184,15 @@ region_rect = Rect2( 2, 1, 96, 62 )
 
 [node name="DanglingAnimation" type="AnimationPlayer" parent="."]
 autoplay = "Dangling_Right"
-anims/Dangling_Left = SubResource( 7 )
-anims/Dangling_Right = SubResource( 8 )
+anims/Dangling_Left = SubResource( 8 )
+anims/Dangling_Right = SubResource( 9 )
 
 [node name="HoleParticles" type="Particles2D" parent="."]
 visible = false
 amount = 60
 lifetime = 0.5
 speed_scale = 0.53
-process_material = SubResource( 9 )
+process_material = SubResource( 10 )
 texture = ExtResource( 6 )
 
 [connection signal="body_entered" from="Influence" to="." method="_on_Influence_body_entered"]
