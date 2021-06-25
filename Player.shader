@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 //The screen UV of whats ahead current object is auto excluded
 uniform sampler2D noiseTex;
-uniform float MAX_UV_DISP = 0.01;
+uniform float MAX_UV_DISP = 0.001;
 uniform float LOWER_DIST = 0.01;
 uniform float UPPER_DIST = 0.5;
 uniform float sprite_scale = 211.469;
@@ -39,10 +39,11 @@ void fragment() {
 	vec2 origin_uv = origin_pixels * SCREEN_PIXEL_SIZE;
 	COLOR.rgb = vec3(text_coord, 0);
 
-//	Doing this without a noise texture has a very weird effect
-	vec2 uv = SCREEN_UV + noiseVal * MAX_UV_DISP * inverse_mapped;
+//This is stained glass distortion effect
+//	Doing this without a noise texture has a very weird effect 
+//	vec2 uv = SCREEN_UV + noiseVal * MAX_UV_DISP * inverse_mapped;
 //	Need to apply rotation (using rot mat) based on angle computed 
-//	vec2 uv = SCREEN_UV;
+	vec2 uv = SCREEN_UV;
 	uv -= origin_uv;
 	mat2 rotation = mat2(vec2(cos(angle), -sin(angle)), vec2(sin(angle), cos(angle)));
 	uv = uv * rotation;

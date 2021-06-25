@@ -7,7 +7,8 @@ var screen_size;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	OS.set_window_position(Vector2())
+	if OS.get_name() == "Windows" && !OS.is_debug_build():
+		OS.set_window_position(Vector2())
 #	var projectResolution=Vector2(Globals.get("display/width"),Globals.get("display/height"));
 #	print(OS.window_size)
 #	print(ProjectSettings.get_setting("display/window/size/width"))
