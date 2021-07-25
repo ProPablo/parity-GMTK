@@ -22,7 +22,7 @@ export var ITEM_PITY_THRESHOLD = 0.1
 export var ITEM_PITY_MINIMUM = 0.2
 
 
-var life_count = 4;
+var life_count = 0;
 var points = 0;
 var game_over = false;
 var crafting_slots = [];
@@ -35,6 +35,7 @@ var present = null
 var time_to_craft = 3.0
 
 func _ready():
+	life_count = max_life
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$HUD.hide()
 	$GOMenu.hide()
