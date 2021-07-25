@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Item",
+"language": "GDScript",
+"path": "res://scenes/Item.gd"
+}, {
 "base": "Node2D",
 "class": "Slot",
 "language": "GDScript",
 "path": "res://scenes/Slot.gd"
 } ]
 _global_script_class_icons={
+"Item": "",
 "Slot": ""
 }
 

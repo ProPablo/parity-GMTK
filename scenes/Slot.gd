@@ -17,7 +17,7 @@ enum {
 	EXPIRING,
 	TRAVEL_BACK
 }
-
+var idle_disabled = false
 var state = IDLE
 var t = 0.0
 var move_to
@@ -38,9 +38,8 @@ func insert_item(new_item):
 	_start_expiring()
 
 func _return():
-	print("travelling back")
 	item.queue_free()
-	item =null
+	item = null
 	state = TRAVEL_BACK
 	t = 0.0
 	$SlotSprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
@@ -64,10 +63,11 @@ func _start_crafting(queue):
 func _on_slot_expire():
 	$SlotSprite.position.x = item.position.x
 	$SlotSprite.position.y = item.position.y
-	item.queue_free()
-	item = null
-	$SlotSprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
-	state = IDLE
+	if !idle_disabled:
+		item.queue_free()
+		item = null
+		$SlotSprite.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
+		state = IDLE
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

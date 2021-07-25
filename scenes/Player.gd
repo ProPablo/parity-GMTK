@@ -41,7 +41,6 @@ func _physics_process(delta):
 		var vec_towards = (position - body.position).normalized()
 		var distance_squared = position.distance_squared_to(body.position);
 		var accel = ((G*MASS) / distance_squared);
-#	print(accel)
 		body.velocity += vec_towards * accel * delta;
 
 	var rot = p_div.rotation + PI/2;

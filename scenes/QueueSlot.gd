@@ -3,6 +3,8 @@ signal queue_expire(queue);
 
 var ITEM_MAX_RANGE = 2 # max items in recipe 
 onready var global = $"/root/Global"
+onready var main = $"/root/Main"
+onready var animator = $Animation
 const Item = preload("res://scenes/Item.tscn")
 const Plus = preload("res://scenes/Plus.tscn")
 
@@ -10,7 +12,7 @@ export var space_between = 0.05;
 export var expire_time = 12.0
 export var fade_scale = 0.16
 export var shake_scalar = 16.0
-export var fire_heart_speed = 10
+export var fire_heart_speed = 2000
 
 var heart_location = Vector2(0,0);
 
@@ -38,12 +40,11 @@ func _ready():
 	space = sprite.get_rect().size.x * sprite.scale.x
 	height = sprite.get_rect().size.y * sprite.scale.y 
 	
-	var anim = $Animation.get_animation("Expiring")
+	var anim = animator.get_animation("Expiring")
 	var anim_distance = global.screen_size.x - space
-	print(anim_distance)
 	anim.track_set_key_value(1, 1, anim_distance)
 	
-	$Animation.playback_speed = 1 / expire_time;
+	animator.playback_speed = 1 / expire_time;
 	parent_size = get_parent().get_rect().size
 	color = Color(randf(), randf(), randf(), 1)
 	sprite.get_node("BG").color = color
@@ -51,24 +52,30 @@ func _ready():
 	
 	var item1 = pick_item();
 	item1.position.x = -space/4
+	item1.remove_from_group("items")
 	
 	var item2 = pick_item();
 	item2.position.x = space/4
+	item2.remove_from_group("items")
+	
 	_start_expiring()
 	
 func enable_crafting():
 	state = CRAFTING
-	$Animation.stop()
+	animator.stop()
 	
 func _start_expiring():
-	
-	$Animation.play("Expiring");
+	animator.play("Expiring");
 	
 func _on_queue_expire():
 	items = null
 #	sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 #	$Container/BG.color = Color(1.0, 1.0, 1.0, 1.0)
+	state = FIRE_AT_HEART
+#	$Tween.interpolate_property(self, "position", position, move_to, time_to_craft, Tween.TRANS_LINEAR)
+#	$Tween.start()
 	emit_signal("queue_expire", self)
+	
 
 func adjust_index(index):
 	var offset =  height * index + height/2 + space_between * height
@@ -89,26 +96,27 @@ func pick_item() -> KinematicBody2D:
 	item.item_to_queue(current_item_data, current_item_name, sprite.get_rect().size.y)
 	
 	var size = item.scale * item.get_child(0).get_rect().size;
-#	print((-space/2 + size.x/2 + space*space_between) * -1)
 	item.position = Vector2(0, 0)
 	items.append(item)
 	return item;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	match state:
 		CRAFTING:
 			pass
 		EXPIRING:
-			vibrate.position.y = $Animation.current_animation_position * shake_scalar * randf();
-			vibrate.position.x = $Animation.current_animation_position * shake_scalar * randf(); 
+			vibrate.position.y = animator.current_animation_position * shake_scalar * randf();
+			vibrate.position.x = animator.current_animation_position * shake_scalar * randf(); 
 		FIRE_AT_HEART:
-			var vect = (global_position - heart_location).normalized();
-			global_position += vect * fire_heart_speed * delta;
+			global_position += Vector2(0, fire_heart_speed * delta);
 
 
 func _on_QueueSlot_area_entered(area):
 	print("Found heart")
+	main.life_down()
+	queue_free()
 	pass # Replace with function body.
 
 

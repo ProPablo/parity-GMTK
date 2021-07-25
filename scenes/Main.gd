@@ -1,7 +1,9 @@
 extends Node2D
-export (PackedScene) var Item;
+export (PackedScene) var ItemPrefab;
 const SlotPrefab = preload("res://scenes/Slot.tscn")
 const Slot = preload("res://scenes/Slot.gd")
+const Item = preload("res://scenes/Item.gd")
+const Queue = preload("res://scenes/QueueSlot.gd")
 const QueueSlot = preload("res://scenes/QueueSlot.tscn")
 const Present = preload("res://scenes/Present.tscn")
 const Heart = preload("res://scenes/Heart.tscn")
@@ -13,6 +15,11 @@ export var total_slots = 5;
 export var slots_margin = 0.3;
 export var max_points = 3;
 export var max_life = 4;
+export var INIT_VEL_LOW = 50
+export var INIT_VEL_HIGH = 300
+export var ITEM_PITY_HEURISTIC = 0.9
+export var ITEM_PITY_THRESHOLD = 0.1
+export var ITEM_PITY_MINIMUM = 0.2
 
 
 var life_count = 4;
@@ -112,6 +119,8 @@ func _process(delta):
 
 func check_crafting():
 	for q in queues:
+		if (q.state != Queue.EXPIRING):
+			continue
 		var selected_q = []
 
 		for q_item in q.items:
@@ -132,17 +141,52 @@ func check_crafting():
 			$CraftingTimer.start()
 			break
 	
+func get_pity():
+#	This also gets the items in SLots and queues
+	var current_items = get_tree().get_nodes_in_group("items")
+	var highest_heuristic = 0;
+	var highest_q = null;
+	for q in queues:
+		if (q.state != Queue.EXPIRING):
+			continue
+		var anim_state = q.animator.current_animation_position
+#		All queues are below 0.5 if the first is
+		if (anim_state < ITEM_PITY_MINIMUM):
+			continue
+#		Cant assign types in for loops
+		for q_item in q.items:
+			var is_in_tree = false;
+			for i in current_items:
+				if i._name == q_item._name: anim_state *= ITEM_PITY_HEURISTIC;
+		
+		print(anim_state)
+		if (anim_state > highest_heuristic):
+			highest_heuristic = anim_state
+			highest_q = q
+
+	print("cycle")
+	if (highest_heuristic < ITEM_PITY_THRESHOLD):
+		return null
+	return highest_q.items[randi() % highest_q.items.size()]._name
+		
+
+
 func _on_ItemTimer_timeout(): 
-	var item = Item.instance();
+	var item = ItemPrefab.instance();
 	add_child(item);
 	var item_range = rand_range(0, global.screen_size.x*2);
 	item.position = Vector2(item_range, $ItemPosition.position.y);
 	var dict_keys = global.asset_dict[global.current_act].keys()
-	var rand_index = randi() % dict_keys.size()
-#	var rand_index = randi() % 2
-	var current_item_name = dict_keys[rand_index]
+	var current_item_name = get_pity()
+	print(current_item_name)
+	if (!current_item_name):
+		var rand_index = randi() % dict_keys.size()
+		current_item_name = dict_keys[rand_index]
+	
 	var current_item_data = global.asset_dict[global.current_act][current_item_name]
-	item._loadJSON(current_item_data, current_item_name, Vector2(rand_range(0, .5), rand_range(50, 300)));
+	var init_velocity = Vector2(rand_range(0, .5), rand_range(INIT_VEL_LOW, INIT_VEL_HIGH))
+#	Use proper dependancy injection instead
+	item._loadJSON(current_item_data, current_item_name, init_velocity);
 
 func _on_QueueTimer_timeout():
 	var size_of_list = queues.size()
@@ -162,8 +206,7 @@ func adjust_queues():
 func queue_remove(queue):
 	queues.erase(queue)
 	adjust_queues()
-	life_down()
-	queue.call_deferred("free")
+#	life_down()
 
 func life_down():
 	$ShakeCamera2D.add_trauma(0.4)
@@ -180,7 +223,7 @@ func _on_CraftingTimer_timeout():
 	points += 1;
 	$HUD/PointLabel.text = "Points: " + str(points)
 	if (points >= max_points):
-		global.next_act()	
+		global.next_act()
 #	var present = Present.instance()
 #	add_child(present)
 #	var collide_position = slots[crafting_slots[0]].global_position 
@@ -194,3 +237,4 @@ func _on_CraftingTimer_timeout():
 	adjust_queues()
 	currently_crafting.queue_free()
 	currently_crafting = null
+

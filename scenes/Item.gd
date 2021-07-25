@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Item
+
 export var velocity = Vector2(1,1)
 var mass = 1;
 var points = 1;

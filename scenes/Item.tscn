@@ -24,7 +24,7 @@ tracks/0/keys = {
 }
 
 [node name="Item" type="KinematicBody2D" groups=[
-"Items",
+"items",
 ]]
 collision_layer = 4
 collision_mask = 10
@@ -41,4 +41,5 @@ shape = SubResource( 1 )
 anims/rotate = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
