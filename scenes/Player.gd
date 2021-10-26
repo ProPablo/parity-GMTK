@@ -25,7 +25,7 @@ func _ready():
 
 
 func _input(event):
-	if (event is InputEventMouseMotion && !get_parent().game_over ):
+	if (event is InputEventMouseMotion && !get_tree().get_current_scene().game_over ):
 		var mouse_pos = get_global_mouse_position();
 		position = Vector2(clamp(mouse_pos.x, 1, 566), mouse_pos.y);
 		
