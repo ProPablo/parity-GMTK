@@ -1,0 +1,40 @@
+{
+	"color": "#ffffffff",
+	"description": "Large and incharge, this man is in control",
+	"display_name": "",
+	"display_name_bool": false,
+	"id": "character-1636979093.json",
+	"mirror_portraits": false,
+	"name": "Sir Jeremy \"Waffle\" Rein",
+	"nickname": "",
+	"nickname_bool": false,
+	"offset_x": 0,
+	"offset_y": 0,
+	"portraits": [
+		{
+			"name": "Default",
+			"path": ""
+		},
+		{
+			"name": "char_spritesheet1",
+			"path": "res://assets/space_shooter/char/char_spritesheet1.png"
+		},
+		{
+			"name": "char_spritesheet2",
+			"path": "res://assets/space_shooter/char/char_spritesheet2.png"
+		},
+		{
+			"name": "char_spritesheet3",
+			"path": "res://assets/space_shooter/char/char_spritesheet3.png"
+		},
+		{
+			"name": "char_spritesheet4",
+			"path": "res://assets/space_shooter/char/char_spritesheet4.png"
+		},
+		{
+			"name": "char_spritesheet5",
+			"path": "res://assets/space_shooter/char/char_spritesheet5.png"
+		}
+	],
+	"scale": 100
+}

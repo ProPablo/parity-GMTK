@@ -4,12 +4,9 @@
 [ext_resource path="res://assets/clover-sans.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://scenes/StartMenu.gd" type="Script" id=3]
 [ext_resource path="res://assets/background_startmenu.png" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/clover_font.tres" type="DynamicFont" id=5]
 
 [sub_resource type="DynamicFont" id=1]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 2 )
 
 [node name="StartMenu" type="CanvasLayer"]
@@ -27,7 +24,7 @@ margin_top = 0.511993
 margin_right = -288.0
 margin_bottom = -35.144
 rect_scale = Vector2( 2, 2 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "PARITY"
 align = 1
@@ -46,7 +43,7 @@ margin_top = 28.0
 margin_right = 48.0
 margin_bottom = 108.0
 rect_pivot_offset = Vector2( 48, 40 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -56,4 +53,5 @@ __meta__ = {
 position = Vector2( 48, 40 )
 scale = Vector2( 3.25, 3.25 )
 texture = ExtResource( 1 )
+
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
